@@ -1,9 +1,8 @@
 # HANDOFF
 
 ## State (2026-11-09)
-- Branch `awwwards-redesign`, pushed to origin. Not merged to main (owner's instruction).
+- Merged into `main` on 2026-11-09 (`git merge -s ours origin/main`, so origin/main's broken design attempts were discarded) and pushed. Branch `awwwards-redesign` kept; `origin/claude-redesign` also exists on GitHub (not touched).
 - Concept: "the hall's seating plan" (see DESIGN.md). Phone-first: about 80% of visits are on phones.
-- `origin/main` is 17 commits ahead of local main and broken (QuoteForm.tsx = `PLACEHOLDER_ORIGINAL`); not merged.
 - `npm run build` pre-renders every route (scripts/prerender.mjs). Set `SITE_URL=https://…` at build time for canonical, og:url and sitemap.xml; no production domain is known yet.
 - `npm run preview` serves the pre-rendered pages and a real 404 (plugin in vite.config.ts).
 
@@ -21,7 +20,7 @@
 - Gallery sketches still waiting for photos: Thomas PARs on the battens, load-in route, dressing rooms, power sockets.
 
 ## Jury
-- Round 1: branch 7.0, main 6.7. Round 2 (media + fixes): 7.5. Owner asked not to run a jury after the logo work.
+- Round 1: branch 7.0, main 6.7. Round 2 (media + fixes): 7.5. Pre-merge (logo + festival, fresh critic): 7.25, no critical findings. Fix list in `.jury/127.0.0.1-4401/scorecard.md` (git-ignored).
 
 ## Next
 - Production domain for canonical. Photos for the four remaining sketches.
