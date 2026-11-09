@@ -1,10 +1,14 @@
 # HANDOFF
 
 ## State (2026-11-09)
-- Merged into `main` on 2026-11-09 (`git merge -s ours origin/main`, so origin/main's broken design attempts were discarded) and pushed. Branch `awwwards-redesign` kept; `origin/claude-redesign` also exists on GitHub (not touched).
+- LIVE on Vercel: https://cinematheque-tiberias.vercel.app (project `cinematheque-tiberias`, team assiddan-creators-projects, Hobby). No custom domain yet.
+- Git integration: the project deploys from GitHub `assiddan-creator/cinematheque-tiberias`; every push to `main` is a production deploy (about 30 s). `vercel.json` sets the build (`npm run build`, output `dist`, clean URLs).
+- Films update automatically: per the owner, a scheduled task pulls the programme from Tarbut Tiberias and pushes to `main` twice a month, which redeploys the site. The data it edits is `src/content.ts` (`screenings`).
+- Only `main` exists (the `awwwards-redesign` and `claude-redesign` branches were merged or retired and deleted on 2026-11-09).
 - Concept: "the hall's seating plan" (see DESIGN.md). Phone-first: about 80% of visits are on phones.
-- `npm run build` pre-renders every route (scripts/prerender.mjs). Set `SITE_URL=https://…` at build time for canonical, og:url and sitemap.xml; no production domain is known yet.
+- Site URL: `npm run build` pre-renders every route (scripts/prerender.mjs) and takes the address from `SITE_URL`, else from Vercel's `VERCEL_PROJECT_PRODUCTION_URL` (so canonical, og:url, og:image and sitemap.xml follow a custom domain once it is added). Local builds without either skip canonical and the sitemap.
 - `npm run preview` serves the pre-rendered pages and a real 404 (plugin in vite.config.ts).
+- Vercel CLI on this PC: login crashes because the machine name is Hebrew ("אסי-ד" in an HTTP header). Use the dashboard, or run the CLI with an ASCII hostname override.
 
 ## Logo
 - Source: `media/logo newlogo.jpeg` (and the smaller `media/logo.jpeg`). Approved by the owner.
