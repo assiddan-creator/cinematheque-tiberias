@@ -14,6 +14,7 @@ import { btnLine, btnRed, btnWhite } from "../ui";
 import { ExternalLink } from "./ExternalLink";
 import { photos } from "../media";
 import { Photo } from "./Photo";
+import { FestivalSection } from "./Festival";
 
 export function Poster({ src, title, eager = false }: { src?: string; title: string; eager?: boolean }) {
   const [failed, setFailed] = useState(false);
@@ -254,6 +255,8 @@ export function ScreeningsBrowser() {
           ))}
         </div>
       ) : null}
+
+      {filter === "all" || filter === "family" ? <FestivalSection /> : null}
 
       <div className="wrap">
         {shows.length ? (

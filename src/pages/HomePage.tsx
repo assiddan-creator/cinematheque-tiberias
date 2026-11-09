@@ -1,5 +1,6 @@
 import { screenings } from "../content";
 import { Fresh } from "../components/Fresh";
+import { FestivalBand } from "../components/Festival";
 import { HallPhotos } from "../components/HallPhotos";
 import { HomeHero } from "../components/HomeHero";
 import { PassBand, Timetable } from "../components/Screenings";
@@ -17,6 +18,7 @@ export function HomePage() {
         <Timetable />
       </Fresh>
       <HallPhotos />
+      <FestivalBand />
       {pass ? <PassBand item={pass} /> : null}
       <RentalTeaser />
     </>

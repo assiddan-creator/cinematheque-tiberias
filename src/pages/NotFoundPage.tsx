@@ -12,6 +12,15 @@ export function NotFoundPage() {
   return (
     <div className="wrap grid min-h-[70svh] content-center gap-10 py-16 lg:grid-cols-12 lg:gap-8">
       <div className="lg:col-span-6">
+        <img
+          src="/media/logo-sparkle-800.webp"
+          srcSet="/media/logo-sparkle-800.webp 800w, /media/logo-sparkle.webp 1600w"
+          sizes="(min-width: 1024px) 22rem, 70vw"
+          width={1600}
+          height={679}
+          alt="סינמטק טבריה"
+          className="mb-8 block h-auto w-full max-w-[22rem]"
+        />
         <p className="text-sm font-medium text-muted">העמוד לא נמצא</p>
         <h1 className="display t-xl mt-3">שורה 16 לא קיימת</h1>
         <p className="mt-5 max-w-[30rem] text-[1.125rem] text-muted">

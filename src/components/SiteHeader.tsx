@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { links, venue } from "../content";
 import { ExternalLink } from "./ExternalLink";
+import { Logo } from "./Logo";
 import { btnRed } from "../ui";
 
 const items = [
@@ -18,24 +19,29 @@ function isCurrent(pathname: string, hash: string, to: string) {
   return pathname === path;
 }
 
-function Wordmark() {
-  return (
-    <span className="flex items-center gap-2.5">
-      <svg viewBox="0 0 28 28" className="size-7 shrink-0" aria-hidden="true">
-        <rect className="logo-seat" x="3" y="3" width="22" height="15" rx="7" fill="#9e1430" />
-        <rect x="1.5" y="19" width="25" height="6" rx="3" fill="#6f0c22" />
-      </svg>
-      <span className="leading-none">
-        <span className="block whitespace-nowrap font-display text-[1.75rem] font-bold leading-[0.8] sm:text-[1.9rem]">{venue.name}</span>
-        <span className="mt-1 hidden text-[0.75rem] font-medium text-muted sm:block">מרכז תרבות, קולנוע וכנסים</span>
-      </span>
-    </span>
-  );
-}
-
 export function SiteHeader() {
   const { pathname, hash } = useLocation();
   const [open, setOpen] = useState(false);
+  const onHome = pathname === "/";
+  const [heroLogoGone, setHeroLogoGone] = useState(!onHome);
+
+  useEffect(() => {
+    if (!onHome) {
+      setHeroLogoGone(true);
+      return;
+    }
+    const target = document.getElementById("hero-logo");
+    if (!target) {
+      setHeroLogoGone(true);
+      return;
+    }
+    setHeroLogoGone(false);
+    const io = new IntersectionObserver(([entry]) => setHeroLogoGone(!entry.isIntersecting), {
+      rootMargin: "-68px 0px 0px 0px",
+    });
+    io.observe(target);
+    return () => io.disconnect();
+  }, [onHome]);
   const menuId = useId();
   const menuButton = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
@@ -72,8 +78,13 @@ export function SiteHeader() {
   return (
     <header className="no-print sticky top-0 z-50 border-b border-[var(--line)] bg-ground/95 backdrop-blur-sm">
       <div className="wrap flex min-h-[3.75rem] items-center gap-2.5 sm:min-h-[4.25rem] sm:gap-4">
-        <Link to="/" className="logo util-link min-w-0 shrink-0 py-2">
-          <Wordmark />
+        <Link
+          to="/"
+          className="logo header-logo min-w-0 shrink-0 py-1.5"
+          aria-label={venue.name}
+          data-hidden={heroLogoGone ? undefined : "true"}
+        >
+          <Logo small className="block h-11 w-auto lg:h-12" />
         </Link>
 
         <nav className="ms-8 hidden items-center gap-7 lg:flex" aria-label="ניווט ראשי">

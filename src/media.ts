@@ -45,7 +45,7 @@ export const photos = {
     name: "workshop-model",
     w: 2000,
     h: 1500,
-    alt: "סדנת יצירה: יד מניחה שורת כיסאות אדומים מנייר בתוך דגם קטן של אולם קולנוע",
+    alt: "סדנת יצירה בפסטיבל הילדים: בונים דגם קטן של אולם קולנוע עם שורות כיסאות אדומים מנייר",
   },
   stageScreenUp: {
     name: "stage-screen-up",
@@ -53,9 +53,52 @@ export const photos = {
     h: 1500,
     alt: "הבמה כשמסך הקולנוע מקופל לתקרה: רצפת עץ לכל רוחב הבמה, מרצה במרכזה והקהל באולם",
   },
+  festivalOpening: {
+    name: "festival-opening",
+    w: 2048,
+    h: 1536,
+    alt: "פתיחת פסטיבל כנרת לסרטי ילדים באולם: שקופית הפסטיבל על המסך והקהל בשורות",
+  },
+  festivalHall: {
+    name: "festival-hall",
+    w: 1600,
+    h: 1200,
+    alt: "אולם מלא בפסטיבל הילדים, הקהל מרים ידיים מול הבמה והמסך",
+  },
+  festivalGreenscreen: {
+    name: "festival-greenscreen-stage",
+    w: 1536,
+    h: 2048,
+    alt: "סדנת מסך ירוק על הבמה: צילום בטאבלט על חצובה, והתמונה מוקרנת על המסך הגדול",
+  },
+  festivalFilming: {
+    name: "festival-filming",
+    w: 2048,
+    h: 1536,
+    alt: "סדנת צילום בפסטיבל הילדים: מנחה מצלם בטאבלט על חצובה ומשתתפים מתרגלים מול המצלמה",
+  },
+  festivalCraft: {
+    name: "festival-craft",
+    w: 2048,
+    h: 1536,
+    alt: "סדנת יצירה בפסטיבל הילדים: שולחנות עבודה עם חומרי יצירה בחדר שקירותיו מכוסים בצילומים היסטוריים",
+  },
+  educationScreening: {
+    name: "education-screening",
+    w: 2048,
+    h: 1536,
+    alt: "מפגש של הסינמטק החינוכי באולם: לוגו התוכנית על המסך, מנחה על הבמה וקהל של תלמידים",
+  },
 } satisfies Record<string, Photo>;
 
 export const videos = {
+  festivalHall: {
+    src: "/media/festival-hall.mp4",
+    poster: "/media/festival-hall-poster.webp",
+    w: 848,
+    h: 478,
+    label: "אולם מלא בפסטיבל הילדים: הקהל עונה למנחה מהבמה",
+  },
   lobby: {
     src: "/media/lobby-reception.mp4",
     poster: "/media/lobby-reception-poster.webp",

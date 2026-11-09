@@ -11,7 +11,7 @@ import { btnLine, btnRed } from "../ui";
 
 const packageMedia: Record<string, { photo: (typeof photos)[keyof typeof photos]; caption: string }> = {
   business: { photo: photos.eventWide, caption: "אירוע באולם מלא, עם מצגת על המסך" },
-  education: { photo: photos.workshopModel, caption: "סדנת יצירה: דגם של אולם קולנוע" },
+  education: { photo: photos.educationScreening, caption: "מפגש של הסינמטק החינוכי באולם" },
   private: { photo: photos.lectureStage, caption: "הרצאה על הבמה, כשהמסך מקופל למעלה" },
 };
 

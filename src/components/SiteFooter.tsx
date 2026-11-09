@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { links, venue } from "../content";
 import { ExternalLink } from "./ExternalLink";
+import { Logo } from "./Logo";
 
 const linkClass = "util-link inline-flex min-h-7 items-center";
 
@@ -9,7 +10,7 @@ export function SiteFooter() {
     <footer className="no-print bg-ink text-white">
       <div className="wrap grid gap-10 pb-10 pt-16 lg:grid-cols-12 lg:gap-8 lg:pt-20">
         <div className="lg:col-span-6">
-          <p className="display text-[clamp(4rem,2rem+7vw,8.5rem)] leading-[0.8]">{venue.name}</p>
+          <Logo tone="red" title={venue.name} className="block h-auto w-full max-w-[26rem]" />
           <p className="mt-4 text-white/75">מרכז תרבות, קולנוע וכנסים</p>
         </div>
 

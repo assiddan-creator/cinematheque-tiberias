@@ -5,6 +5,7 @@ import { btnGhost, btnWhite } from "../ui";
 import { ExternalLink } from "./ExternalLink";
 import { Fresh } from "./Fresh";
 import { SeatField } from "./SeatField";
+import { Logo } from "./Logo";
 
 function NextScreening() {
   const next = timetable(screenings)[0];
@@ -62,10 +63,12 @@ export function HomeHero() {
 
       <div className="wrap grid min-h-[calc(100svh-3.75rem)] grid-cols-1 content-start gap-y-6 pb-[52vw] pt-6 sm:pb-[38vw] lg:min-h-[44rem] lg:grid-cols-12 lg:gap-x-8 lg:pb-[30vw] lg:pt-12 xl:pb-[26rem]">
         <div className="lg:col-span-5">
-          <h1 id="home-title" className="display text-[clamp(4.6rem,1.6rem+15vw,15rem)] leading-[0.8]">
-            <span className="block">סינמטק</span>
-            <span className="block">טבריה</span>
+          <h1 id="home-title" className="sr-only">
+            סינמטק טבריה
           </h1>
+          <div id="hero-logo" className="-ms-1 w-full max-w-[34rem] lg:-ms-3">
+            <Logo tone="red" className="block h-auto w-full" />
+          </div>
           <p className="mt-4 max-w-[22rem] text-[1rem] leading-snug text-white/90 sm:mt-5 sm:text-[1.0625rem]">
             {venue.place}, {venue.street.split(" / ")[0]}, {venue.city}. סרטי ילדים מדובבים, טרום-בכורה, מופעים וכנסים.
           </p>

@@ -283,20 +283,28 @@ html.lenis body {
   }
 }
 
-/* wordmark: the seat in the logo folds up */
-.logo-seat {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  transition: transform 0.35s var(--ease-out), fill 0.35s var(--ease-out);
+/* header logo: on the home page it waits for the hero logo to scroll away */
+.header-logo {
+  transition: opacity 0.45s var(--ease-out), translate 0.45s var(--ease-out), visibility 0s;
 }
-.logo:focus-visible .logo-seat {
-  transform: scaleY(0.55);
-  fill: var(--color-seat-up);
+.header-logo[data-hidden="true"] {
+  opacity: 0;
+  translate: 0 -10px;
+  visibility: hidden;
+  transition: opacity 0.25s var(--ease-out), translate 0.25s var(--ease-out), visibility 0s 0.25s;
+}
+
+/* logo: the clapper arm claps shut on its hinge */
+.logo-arm {
+  transform-box: view-box;
+  transition: rotate 0.32s cubic-bezier(0.5, 0, 0.2, 1.4);
+}
+.logo:focus-visible .logo-arm {
+  rotate: 14deg;
 }
 @media (hover: hover) {
-  .logo:hover .logo-seat {
-    transform: scaleY(0.55);
-    fill: var(--color-seat-up);
+  .logo:hover .logo-arm {
+    rotate: 14deg;
   }
 }
 
