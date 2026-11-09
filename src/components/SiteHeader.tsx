@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { links, venue } from "../content";
 import { ExternalLink } from "./ExternalLink";
-import { goldButton } from "../ui";
+import { wineButton } from "../ui";
 
 const items = [
   { to: "/screenings", label: "סרטים ומופעים" },
@@ -56,7 +56,7 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="no-print sticky top-0 z-40 border-b border-gold/20 bg-void/95 backdrop-blur">
+    <header className="no-print sticky top-0 z-40 border-b border-wine/20 bg-void/95 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <Link to="/" className="min-w-0 leading-tight" onClick={closeFromLink}>
           <span className="block font-display text-lg text-ivory sm:text-xl">{venue.name}</span>
@@ -79,14 +79,14 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <ExternalLink href={links.cinematheque} className={`${goldButton} ms-auto shrink-0 px-3 text-xs sm:px-4 sm:text-sm lg:ms-0`}>
+        <ExternalLink href={links.cinematheque} className={`${wineButton} ms-auto shrink-0 px-3 text-xs sm:px-4 sm:text-sm lg:ms-0`}>
           לרכישת כרטיסים
         </ExternalLink>
 
         <button
           ref={menuButton}
           type="button"
-          className="inline-flex size-11 items-center justify-center border border-gold/25 lg:hidden"
+          className="inline-flex size-11 items-center justify-center border border-wine/25 lg:hidden"
           aria-expanded={open}
           aria-controls={menuId}
           onClick={() => {
@@ -104,7 +104,7 @@ export function SiteHeader() {
           <motion.nav
             id={menuId}
             aria-label="ניווט ראשי"
-            className="border-t border-gold/20 bg-void lg:hidden"
+            className="border-t border-wine/20 bg-void lg:hidden"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={reduce ? undefined : { opacity: 0 }}
