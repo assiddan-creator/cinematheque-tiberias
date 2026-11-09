@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Copy, MessageCircle, Printer } from "lucide-react";
 import { techShareText, techUrl } from "../messages";
-import { goldButton, lineButton } from "../ui";
+import { wineButton, lineButton } from "../ui";
 
 export function TechActions() {
   const [copied, setCopied] = useState(false);
@@ -45,7 +45,7 @@ export function TechActions() {
         <MessageCircle aria-hidden="true" className="me-2 size-4" />
         שלח בוואטסאפ למפיק
       </button>
-      <button type="button" className={goldButton} onClick={() => window.print()}>
+      <button type="button" className={wineButton} onClick={() => window.print()}>
         <Printer aria-hidden="true" className="me-2 size-4" />
         הדפס / שמור מפרט כ-PDF
       </button>
