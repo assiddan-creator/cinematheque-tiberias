@@ -49,6 +49,8 @@ export type Screening = {
   buyHref: string;
   secondaryHref?: string;
   secondaryLabel?: string;
+  /** YouTube video id of the trailer, from the film's page on Tarbut Tiberias. */
+  trailer?: string;
 };
 
 export const categoryLabel: Record<ScreeningCategory, string> = {
@@ -88,6 +90,7 @@ export const screenings: Screening[] = [
     image: "/posters/ted.jpg",
     dates: ["2026-11-09T17:00:00+02:00", "2026-11-17T17:00:00+02:00"],
     buyHref: "https://www.tarbutiberias.co.il/טד_החוקר_ומנורת_הקסמים__מדובב_",
+    trailer: "6uHe_-Gr_F8",
   },
   {
     id: "series",
@@ -112,6 +115,7 @@ export const screenings: Screening[] = [
     dates: ["2026-11-12T17:00:00+02:00", "2026-11-23T17:00:00+02:00"],
     buyHref:
       "https://www.tarbutiberias.co.il/פיניק__להציל_את_המפלצות__חדש._מדובב_",
+    trailer: "lgsflwRRRIg",
   },
   {
     id: "wonder",
@@ -127,6 +131,7 @@ export const screenings: Screening[] = [
       "2026-11-30T17:00:00+02:00",
     ],
     buyHref: "https://www.tarbutiberias.co.il/וונדר_דוג__מדובב_",
+    trailer: "sCeQE-QEW8A",
   },
   {
     id: "mani",

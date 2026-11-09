@@ -20,6 +20,10 @@
 - Empty-hall set (media/‏‏תיקיה חדשה, a (1) to a (10)): home "באולם" uses a (9), a (7), a (6); events uses a (5) (private/lectures) and a (10) (lobby, beside the lobby clip); tech gallery uses a (6) for the PARs, a (8) for the dressing room and a (2) (control booth), plus 15, 3 and 10 moved from home. a (1), a (3), a (4) not used (lobby duplicates).
 - Gallery sketches still waiting for photos: load-in route, power sockets.
 
+## Screenings page
+- `/screenings` (2026-11-09): small title, sticky filter bar, poster cards in a grid (1 / 2 / 3 columns), then the kids pass, the festival, and the full boards as a row of links.
+- Trailers: `trailer` field (YouTube id) on `Screening` in `content.ts` (ted, phoenix, wonder; ids from the films' Tarbut Tiberias pages). Modal in `src/components/TrailerDialog.tsx`: native `<dialog>`, youtube-nocookie iframe created only on click and removed on close. Esc does not reach the page while focus is inside the YouTube player (cross-origin); the X and a click outside always close it.
+
 ## Tech spec
 - Owner's data (2026-11-09) in `content.ts` `specGroups`: projector NEC NC1201L-A (DLP Cinema, laser, 2K, 3D, screens up to 12 m per the maker), sound 5.1 for films + 2 FBT J-Maxx 112A for shows, mixer QL-Milano AB-4, 2 TRX Audio digital wireless mics. `unpublished` keeps stage height, open-screen size, wireless mic model. The WhatsApp share text in `messages.ts` follows the spec.
 

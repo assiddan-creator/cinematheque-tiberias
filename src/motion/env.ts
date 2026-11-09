@@ -29,3 +29,13 @@ export function scrollToTarget(target: Element | number) {
   if (typeof target === "number") window.scrollTo(0, target);
   else target.scrollIntoView();
 }
+
+/** Stops page scrolling while a modal is open (smooth scroll and native). */
+export function setScrollLocked(locked: boolean) {
+  if (!isBrowser) return;
+  if (lenis) {
+    if (locked) lenis.stop();
+    else lenis.start();
+  }
+  document.documentElement.style.overflow = locked ? "hidden" : "";
+}

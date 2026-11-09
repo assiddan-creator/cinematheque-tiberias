@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   categoryLabel,
@@ -13,9 +13,8 @@ import { timetable, whenParts } from "../lib/when";
 import { btnLine, btnRed, btnWhite } from "../ui";
 import { ExternalLink } from "./ExternalLink";
 import { SeatIcon } from "./SeatIcon";
-import { photos } from "../media";
-import { Photo } from "./Photo";
 import { FestivalSection } from "./Festival";
+import { TrailerProvider, useTrailer } from "./TrailerDialog";
 
 export function Poster({ src, title, eager = false }: { src?: string; title: string; eager?: boolean }) {
   const [failed, setFailed] = useState(false);
@@ -140,46 +139,120 @@ export function PassBand({ item }: { item: Screening }) {
   );
 }
 
-function ShowRow({ item, filter }: { item: Screening; filter: FilterId }) {
-  const dates = futureDates(item.dates);
+/** A poster in a 2:3 frame. Posters of another shape sit whole on a blurred copy of themselves. */
+function PosterFrame({ item, eager }: { item: Screening; eager: boolean }) {
+  const [shape, setShape] = useState<"tall" | "other">("tall");
+  const img = useRef<HTMLImageElement>(null);
+  const measure = (el: HTMLImageElement | null) => {
+    if (!el || !el.naturalWidth) return;
+    const ratio = el.naturalWidth / el.naturalHeight;
+    setShape(ratio > 0.6 && ratio < 0.76 ? "tall" : "other");
+  };
+  // the image may finish loading before React attaches onLoad (pre-rendered HTML)
+  useEffect(() => measure(img.current), []);
+  if (!item.image) {
+    return (
+      <div className="flex aspect-[2/3] items-end bg-house p-4 text-white">
+        <span className="display text-3xl">{item.title}</span>
+      </div>
+    );
+  }
   return (
-    <li className="row-hover border-b border-[var(--line)]">
-      <article className="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-x-5 gap-y-4 py-6 sm:grid-cols-[9rem_minmax(0,1fr)] lg:grid-cols-[10rem_minmax(0,1fr)_minmax(15rem,0.7fr)] lg:gap-x-8">
-        <div className="hinge row-span-2 lg:row-span-1">
-          <div className="aspect-[5/7] overflow-hidden">
-            <Poster src={item.image} title={item.title} />
-          </div>
+    <div className="relative aspect-[2/3] overflow-hidden bg-ink">
+      {shape === "other" ? (
+        <img src={item.image} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-60 blur-xl" />
+      ) : null}
+      <img
+        src={item.image}
+        alt={`כרזת ${item.title}`}
+        width={400}
+        height={600}
+        loading={eager ? "eager" : "lazy"}
+        fetchPriority={eager ? "high" : undefined}
+        decoding="async"
+        ref={img}
+        onLoad={(event) => measure(event.currentTarget)}
+        className={`relative h-full w-full ${shape === "tall" ? "object-cover" : "object-contain"}`}
+      />
+    </div>
+  );
+}
+
+function ShowCard({ item, filter, eager }: { item: Screening; filter: FilterId; eager: boolean }) {
+  const dates = futureDates(item.dates);
+  const openTrailer = useTrailer();
+  const [next, ...later] = dates;
+  const nextParts = next ? whenParts(next.iso) : null;
+
+  return (
+    <li className="row-hover flex flex-col">
+      <article className="flex h-full flex-col" aria-labelledby={`show-${item.id}`}>
+        <div className="hinge">
+          <PosterFrame item={item} eager={eager} />
         </div>
-        <div className="min-w-0">
+        <div className="flex flex-1 flex-col pt-4">
           <p className="flex items-center gap-2 text-sm font-medium text-muted">
             <SeatIcon />
             {labelFor(item, filter)}
           </p>
-          <h3 className="display mt-2 text-[clamp(2rem,1.4rem+1.8vw,3.1rem)] leading-[0.92]">{item.title}</h3>
-          <p className="mt-3 max-w-[36rem] text-muted">{item.summary}</p>
-        </div>
-        <div className="col-span-2 sm:col-span-1 sm:col-start-2 lg:col-start-3 lg:row-start-1">
-          <ul className="nums divide-y divide-[var(--line)] border-y border-[var(--line)]">
-            {dates.map((date) => {
-              const parts = whenParts(date.iso);
-              return (
-                <li key={date.iso} className="flex items-baseline justify-between gap-3 py-2">
-                  <span>
-                    <span className="display text-[1.9rem] leading-none text-house">{parts.day}</span>{" "}
-                    <span className="font-medium">ב{parts.month}</span>
-                  </span>
-                  <span className="text-sm text-muted">
-                    {parts.relative ? <strong className="font-semibold text-house">{parts.relative} </strong> : null}
-                    {parts.weekday}, {parts.time}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <h3 id={`show-${item.id}`} className="display mt-2 text-[clamp(1.9rem,1.5rem+1.1vw,2.6rem)] leading-[0.92]">
+            {item.title}
+          </h3>
+          <p className="mt-3 text-muted">{item.summary}</p>
+
+          {nextParts ? (
+            <div className="nums mt-4 border-t-2 border-ink pt-3">
+              <p className="flex flex-wrap items-baseline gap-x-2">
+                <span className="text-sm font-medium text-muted">המועד הקרוב</span>
+                {nextParts.relative ? (
+                  <span className="bg-house px-1.5 py-0.5 text-sm font-semibold text-white">{nextParts.relative}</span>
+                ) : null}
+              </p>
+              <p className="mt-1 leading-none">
+                <span className="display text-[2.4rem] text-house">{nextParts.day}</span>{" "}
+                <span className="font-semibold">
+                  ב{nextParts.month}, {nextParts.weekday}, {nextParts.time}
+                </span>
+              </p>
+              {later.length ? (
+                <ul className="mt-3 divide-y divide-[var(--line)] border-t border-[var(--line)] text-[0.9375rem]">
+                  {later.map((date) => {
+                    const parts = whenParts(date.iso);
+                    return (
+                      <li key={date.iso} className="flex items-baseline justify-between gap-3 py-1.5">
+                        <span>
+                          {parts.relative ? <strong className="font-semibold text-house">{parts.relative}, </strong> : null}
+                          {parts.day} ב{parts.month}
+                        </span>
+                        <span className="text-muted">
+                          {parts.weekday}, {parts.time}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : null}
+            </div>
+          ) : null}
+
+          <div className="mt-auto flex flex-wrap gap-2 pt-5">
             <ExternalLink href={item.buyHref} className={btnRed} arrow>
               לרכישת כרטיסים
+              <span className="sr-only"> ל{item.title}</span>
             </ExternalLink>
+            {item.trailer ? (
+              <button
+                type="button"
+                className={btnLine}
+                onClick={(event) => openTrailer({ id: item.trailer!, title: item.title }, event.currentTarget)}
+              >
+                <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true" focusable="false">
+                  <path d="M4 2.5v11l9.5-5.5z" fill="currentColor" />
+                </svg>
+                צפייה בטריילר
+                <span className="sr-only"> של {item.title}</span>
+              </button>
+            ) : null}
             {item.secondaryHref && item.secondaryLabel ? (
               <ExternalLink href={item.secondaryHref} className={btnLine}>
                 {item.secondaryLabel}
@@ -188,25 +261,6 @@ function ShowRow({ item, filter }: { item: Screening; filter: FilterId }) {
           </div>
         </div>
       </article>
-    </li>
-  );
-}
-
-function BoardRow({ item, filter }: { item: Screening; filter: FilterId }) {
-  return (
-    <li className="row-hover grid gap-3 border-b border-[var(--line)] py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:gap-8">
-      <div>
-        <p className="flex items-center gap-2 text-sm font-medium text-muted">
-          <SeatIcon />
-          {labelFor(item, filter)}. השעות בעמוד הרכישה.
-        </p>
-        <h3 className="display mt-1.5 text-[clamp(1.75rem,1.3rem+1.2vw,2.4rem)] leading-[0.95]">{item.title}</h3>
-        <p className="mt-2 max-w-[40rem] text-muted">{item.summary}</p>
-      </div>
-      <ExternalLink href={item.buyHref} className={`${btnLine} justify-self-start`}>
-        לעמוד הלוח
-        <span className="sr-only"> {item.title}</span>
-      </ExternalLink>
     </li>
   );
 }
@@ -229,28 +283,51 @@ export function ScreeningsBrowser() {
   const count = shows.length + featured.length + boards.length;
 
   return (
-    <div>
-      <div className="wrap">
-        <div role="group" aria-label="סינון הלוח לפי סוג" className="flex flex-wrap gap-2">
-          {filters.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              aria-pressed={filter === item.id}
-              onClick={() => setFilter(item.id)}
-              className="chip"
-            >
-              {item.label}
-            </button>
-          ))}
+    <TrailerProvider>
+      <div className="filter-bar sticky z-30 border-b border-[var(--line)] bg-ground/95 backdrop-blur-sm">
+        <div className="wrap">
+          <div role="group" aria-label="סינון הלוח לפי סוג" className="chip-row flex gap-2 py-3">
+            {filters.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                aria-pressed={filter === item.id}
+                onClick={() => setFilter(item.id)}
+                className="chip shrink-0 whitespace-nowrap"
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
         </div>
-        <p className="sr-only" role="status">
-          {count} פריטים בלוח
-        </p>
+      </div>
+      <p className="sr-only" role="status">
+        {count} פריטים בלוח
+      </p>
+
+      <div className="wrap pt-6">
+        {shows.length ? (
+          <section aria-labelledby="shows-title">
+            <h2 id="shows-title" className="sr-only">
+              סרטים ומופעים עם מועד
+            </h2>
+            <ul className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+              {shows.map((item, index) => (
+                <ShowCard key={item.id} item={item} filter={filter} eager={index === 0} />
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        {count === 0 || (!shows.length && !featured.length) ? (
+          <p className="mt-6 text-muted">
+            אין כרגע הקרנות עם מועד בקטגוריה הזו. לוח ההקרנות המלא נמצא בעמוד הסינמטק בתרבות טבריה.
+          </p>
+        ) : null}
       </div>
 
       {featured.length ? (
-        <div className="mt-8">
+        <div className="mt-16">
           {featured.map((item) => (
             <PassBand key={item.id} item={item} />
           ))}
@@ -259,51 +336,29 @@ export function ScreeningsBrowser() {
 
       {filter === "all" || filter === "family" ? <FestivalSection /> : null}
 
-      <div className="wrap">
-        {shows.length ? (
-          <section aria-labelledby="shows-title" className="mt-12">
-            <h2 id="shows-title" className="display t-l">
-              הקרנות ומופעים עם מועד
-            </h2>
-            <ul className="mt-5 border-t-2 border-ink">
-              {shows.map((item) => (
-                <ShowRow key={item.id} item={item} filter={filter} />
-              ))}
-            </ul>
-          </section>
-        ) : null}
-
-        <figure className="mt-14">
-          <div className="aspect-[4/3] overflow-hidden bg-ink sm:aspect-[21/9]">
-            <Photo photo={photos.hallScreening} sizes="(min-width: 1400px) 1340px, 100vw" className="object-[50%_35%]" />
-          </div>
-          <figcaption className="mt-2 text-sm text-muted">הקרנה באולם הסינמטק, מבט מהשורות האחוריות</figcaption>
-        </figure>
-
-        {boards.length ? (
-          <section aria-labelledby="boards-title" className="mt-14">
-            <h2 id="boards-title" className="display t-l">
-              הלוחות המלאים
-            </h2>
-            <ul className="mt-5 border-t-2 border-ink">
-              {boards.map((item) => (
-                <BoardRow key={item.id} item={item} filter={filter} />
-              ))}
-            </ul>
-          </section>
-        ) : null}
-
-        {count === 0 ? (
-          <p className="mt-10 text-muted">
-            אין כרגע פריטים בקטגוריה הזו. לוח ההקרנות המלא נמצא בעמוד הסינמטק בתרבות טבריה.
+      <div className="wrap mt-16">
+        <section aria-labelledby="boards-title" className="border-t-2 border-ink pt-5">
+          <h2 id="boards-title" className="font-sans text-base font-semibold leading-normal">
+            הלוחות המלאים
+          </h2>
+          <p className="mt-1 max-w-[44rem] text-sm text-muted">
+            כרטיסים להקרנות נרכשים בתרבות טבריה. מופעי סטנדאפ והופעות חיות מופיעים גם בלוח טיקצ׳אק.
           </p>
-        ) : null}
-
-        <p className="mt-10 max-w-[44rem] text-sm text-muted">
-          המועדים נלקחו מלוח תרבות טבריה. אם שעה השתנתה או אזלו הכרטיסים, עמוד הרכישה הוא הקובע. תנאי רכישה
-          וביטול לפי תקנון תרבות טבריה.
-        </p>
+          <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+            {(boards.length ? boards : screenings.filter((item) => item.variant === "board")).map((item) => (
+              <li key={item.id}>
+                <ExternalLink href={item.buyHref} className="inline-link">
+                  {item.title}
+                </ExternalLink>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 max-w-[44rem] text-sm text-muted">
+            המועדים נלקחו מלוח תרבות טבריה. אם שעה השתנתה או אזלו הכרטיסים, עמוד הרכישה הוא הקובע. תנאי רכישה
+            וביטול לפי תקנון תרבות טבריה.
+          </p>
+        </section>
       </div>
-    </div>
+    </TrailerProvider>
   );
 }
