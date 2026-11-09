@@ -9,7 +9,10 @@ const dist = path.join(root, "dist");
 const ssr = path.join(root, "dist-ssr", "entry-server.js");
 const { render, routeMeta, venue } = await import(pathToFileURL(ssr).href);
 
-const site = (process.env.SITE_URL || "").replace(/\/$/, "");
+// SITE_URL wins; on Vercel the project's production address is provided to every build
+// (the vercel.app address until a custom domain is added, then the domain).
+const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "";
+const site = (process.env.SITE_URL || vercelUrl).replace(/\/$/, "");
 const template = fs.readFileSync(path.join(dist, "index.html"), "utf8");
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
