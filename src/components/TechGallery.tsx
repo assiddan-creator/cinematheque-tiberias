@@ -6,7 +6,7 @@ export function TechGallery() {
       {gallery.map((item) => (
         <figure key={item.src}>
           <div className="hinge aspect-[16/10] bg-ink">
-            <img src={item.src} alt={item.alt ?? `סקיצה: ${item.title}`} width={480} height={300} loading="lazy" decoding="async" className={`h-full w-full bg-ink ${item.alt ? "object-cover" : "object-contain"}`} />
+            <img src={item.src} alt={item.alt ?? `סקיצה: ${item.title}`} width={480} height={300} loading="lazy" decoding="async" className={`h-full w-full bg-ink ${item.alt ? "object-cover" : "object-contain"}`} style={item.focus ? { objectPosition: item.focus } : undefined} />
           </div>
           <figcaption className="border-b border-[var(--line)] py-3">
             <span className="block font-semibold">{item.title}</span>

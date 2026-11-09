@@ -363,17 +363,18 @@ export const trusses = [
   },
 ] as const;
 
-export const gallery: { src: string; title: string; caption: string; alt?: string }[] = [
+export const gallery: { src: string; title: string; caption: string; alt?: string; focus?: string }[] = [
   {
-    src: "/media/hall-screening-800.webp",
+    src: "/media/hall-back-to-screen-800.webp",
     title: "חזית הבמה והמסך",
-    caption: "מבט מהאולם אל הבמה ומסך הקולנוע בזמן הקרנה.",
-    alt: "מבט מהשורות האחוריות אל חזית הבמה ומסך הקולנוע הגדול בזמן הקרנה, עם גשר התאורה מעל",
+    caption: "מבט מהשורה האחרונה אל הבמה ומסך הקולנוע.",
+    alt: "האולם הריק מהשורה האחרונה: שורות הכיסאות יורדות אל הבמה, המסך הלבן וגשר התאורה מעליה",
   },
   {
     src: "/media/hall-from-stage-800.webp",
     title: "פנסי התומס על הצוגים",
     caption: "פנסי התומס על הצוג, במבט מהבמה אל האולם.",
+    focus: "50% 0%",
     alt: "מבט מהבמה אל האולם הריק, ופנסי התומס התלויים על הצוג בחלק העליון של התמונה",
   },
   {
@@ -395,16 +396,16 @@ export const gallery: { src: string; title: string; caption: string; alt?: strin
     alt: "אולם מלא בזמן הקרנת סרט מצויר, מבט מהשורות האחוריות אל המסך ואל גשר התאורה",
   },
   {
-    src: "/media/show-stage-800.webp",
+    src: "/media/show-band-800.webp",
     title: "ערב מופע",
-    caption: "הבמה בערב מופע מוזיקה, עם הגברה ותאורה.",
-    alt: "מופע מוזיקה על הבמה: זמרת וזמר עם מיקרופון, להקה ותאורה כחולה, והקהל בשורות הקדמיות",
+    caption: "הבמה בערב מופע מוזיקה, עם להקה, הגברה ותאורה.",
+    alt: "מופע מוזיקה: זמרת עם מיקרופון במרכז הבמה, להקה מאחוריה, תאורה כחולה ונקודות אור על רצפת העץ, והקהל בשורות",
   },
   {
-    src: "/media/standup-800.webp",
+    src: "/media/stage-duo-800.webp",
     title: "על במת העץ",
-    caption: "אמן עם מיקרופון על רצפת העץ של הבמה.",
-    alt: "אמן בחולצה שחורה עומד עם מיקרופון על רצפת העץ של הבמה, בין עמדות תווים",
+    caption: "שני אמנים עם מיקרופונים על רצפת העץ של הבמה.",
+    alt: "שני אמנים עומדים עם מיקרופונים על רצפת העץ של הבמה, בין עמדות תווים ורמקולים, באור חם",
   },
   {
     src: "/gallery/load-in.svg",

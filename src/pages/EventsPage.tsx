@@ -65,6 +65,14 @@ export function EventsPage() {
                       <figcaption className="mt-2 text-sm text-muted">{packageMedia[item.id].caption}</figcaption>
                     </figure>
                   ) : null}
+                  {item.id === "private" ? (
+                    <figure className="mt-4">
+                      <div className="aspect-[4/3] overflow-hidden bg-ink">
+                        <Photo photo={photos.hallScreening} sizes="(min-width: 1024px) 38vw, 100vw" className="object-[50%_40%]" />
+                      </div>
+                      <figcaption className="mt-2 text-sm text-muted">הקרנה באולם, מבט מהשורות האחוריות</figcaption>
+                    </figure>
+                  ) : null}
                   {item.id === "business" ? (
                     <div className="mt-4 grid grid-cols-2 gap-3">
                       <figure>
