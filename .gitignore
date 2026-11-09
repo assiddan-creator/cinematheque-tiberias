@@ -9,5 +9,5 @@ cinematheque_tiberias_spec_and_tech_rider.md
 dist-ssr
 .shots
 .jury
-media/
+/media/
 /*.png
