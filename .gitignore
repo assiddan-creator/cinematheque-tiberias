@@ -1,0 +1,8 @@
+node_modules
+dist
+.vite
+*.local
+.DS_Store
+_extract-links.js
+_extract-imgs.js
+cinematheque_tiberias_spec_and_tech_rider.md
