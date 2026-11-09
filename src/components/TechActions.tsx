@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Copy, MessageCircle, Printer } from "lucide-react";
 import { techShareText, techUrl } from "../messages";
-import { goldButton, lineButton } from "../ui";
+import { btnLine, btnRed } from "../ui";
 
 export function TechActions() {
   const [copied, setCopied] = useState(false);
@@ -36,23 +36,23 @@ export function TechActions() {
   }
 
   return (
-    <div className="no-print mt-6 flex flex-wrap gap-3">
-      <button type="button" className={lineButton} onClick={copyLink}>
+    <div className="no-print mt-8 flex flex-wrap gap-3">
+      <button type="button" className={btnLine} onClick={copyLink}>
         <Copy aria-hidden="true" className="ms-0 me-2 size-4" />
         {copied ? "הקישור הועתק" : "העתק קישור למפרט הטכני"}
       </button>
-      <button type="button" className={lineButton} onClick={share}>
+      <button type="button" className={btnLine} onClick={share}>
         <MessageCircle aria-hidden="true" className="me-2 size-4" />
         שלח בוואטסאפ למפיק
       </button>
-      <button type="button" className={goldButton} onClick={() => window.print()}>
+      <button type="button" className={btnRed} onClick={() => window.print()}>
         <Printer aria-hidden="true" className="me-2 size-4" />
         הדפס / שמור מפרט כ-PDF
       </button>
       <p role="status" className="sr-only">
         {copied ? "הקישור הועתק" : ""}
       </p>
-      <p className="basis-full text-sm text-mist">בחלון ההדפסה בחרו ״שמירה כ-PDF״.</p>
+      <p className="basis-full text-sm text-muted">בחלון ההדפסה בחרו ״שמירה כ-PDF״.</p>
     </div>
   );
 }

@@ -2,7 +2,8 @@ import { FormEvent, useEffect, useId, useState, type ReactNode } from "react";
 import { useSearchParams } from "react-router-dom";
 import { addons, eventTypes, venue } from "../content";
 import { quoteSubject, quoteText } from "../messages";
-import { fieldClass, goldButton, lineButton } from "../ui";
+import { btnLine, btnRed, fieldClass } from "../ui";
+import { SeatField } from "./SeatField";
 
 type Fields = {
   name: string;
@@ -55,6 +56,8 @@ export function QuoteForm() {
   const [errors, setErrors] = useState<Errors>({});
   const [result, setResult] = useState<{ href: string; text: string; channel: "wa" | "mail" } | null>(null);
   const errorSummaryId = useId();
+  const [minDate, setMinDate] = useState<string>();
+  useEffect(() => setMinDate(todayIso()), []);
 
   useEffect(() => {
     const type = params.get("type");
@@ -107,21 +110,22 @@ export function QuoteForm() {
   const errorList = Object.values(errors).filter(Boolean);
 
   return (
-    <form onSubmit={send} noValidate className="border border-gold/20 bg-stone p-5 sm:p-7" aria-describedby={errorList.length ? errorSummaryId : undefined}>
-      <h2 className="text-3xl">בדיקת זמינות והצעת מחיר לאירוע</h2>
-      <p className="mt-3 max-w-2xl text-silver">
+    <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
+    <form onSubmit={send} noValidate className="lg:col-span-7" aria-describedby={errorList.length ? errorSummaryId : undefined}>
+      <h2 className="display t-l">בדיקת זמינות והצעת מחיר לאירוע</h2>
+      <p className="mt-4 max-w-2xl text-muted">
         ממלאים את הפרטים, ובוחרים אם לפתוח הודעת וואטסאפ אל {venue.whatsappDisplay} או מייל אל {venue.email}.
         אפשר גם להתקשר אל {venue.phoneDisplay}.
       </p>
-      <p className="mt-2 text-sm text-mist">שדות המסומנים בכוכבית הם חובה.</p>
+      <p className="mt-2 text-sm text-muted">שדות המסומנים בכוכבית הם חובה.</p>
 
       {errorList.length > 0 ? (
-        <div id={errorSummaryId} role="alert" className="mt-4 border border-[#ffb4b4] px-3 py-2 text-sm text-[#ffb4b4]">
+        <div id={errorSummaryId} role="alert" className="mt-5 border-s-4 border-house bg-[#fbeef0] px-4 py-3 text-sm font-medium text-house-deep">
           יש לתקן את השדות המסומנים לפני השליחה.
         </div>
       ) : null}
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+      <div className="mt-8 grid gap-x-5 gap-y-5 sm:grid-cols-2">
         <Field id="name" label="שם מלא" error={errors.name} required>
           <input
             id="name"
@@ -185,7 +189,7 @@ export function QuoteForm() {
             name="date"
             type="date"
             dir="ltr"
-            min={todayIso()}
+            min={minDate}
             value={fields.date}
             onChange={(event) => update("date", event.target.value)}
             className={`${fieldClass} text-end`}
@@ -212,14 +216,16 @@ export function QuoteForm() {
         </Field>
       </div>
 
-      <fieldset className="mt-6">
-        <legend className="text-lg text-ivory">שדרוגים ושירותי הפקה משלימים</legend>
+      <GuestPlanCompact guests={fields.guests} />
+
+      <fieldset className="mt-10">
+        <legend className="display text-[2rem] leading-none">שדרוגים ושירותי הפקה משלימים</legend>
         <div className="mt-3 grid gap-2">
           {addons.map((item) => (
-            <label key={item.id} className="flex min-h-11 items-start gap-3 border border-gold/20 px-3 py-2">
+            <label key={item.id} className="flex min-h-12 cursor-pointer items-start gap-3 border-b border-[var(--line)] py-3">
               <input
                 type="checkbox"
-                className="mt-1 size-4 accent-[#d4af37]"
+                className="mt-1 size-5 shrink-0 accent-[#9e1430]"
                 checked={fields.addons.includes(item.label)}
                 onChange={() => toggleAddon(item.label)}
               />
@@ -229,33 +235,86 @@ export function QuoteForm() {
         </div>
       </fieldset>
 
-      <div className="mt-6 flex flex-wrap gap-3">
-        <button type="submit" name="channel" value="wa" className={goldButton}>
+      <div className="mt-8 flex flex-wrap gap-3">
+        <button type="submit" name="channel" value="wa" className={btnRed}>
           שליחה לוואטסאפ
         </button>
-        <button type="submit" name="channel" value="mail" className={lineButton}>
+        <button type="submit" name="channel" value="mail" className={btnLine}>
           שליחה במייל
         </button>
       </div>
 
       {result ? (
-        <div role="status" className="mt-6 border border-gold/25 p-4">
+        <div role="status" className="mt-6 border-s-4 border-house bg-paper p-4">
           <p>
             {result.channel === "wa"
               ? "נפתחה הודעת וואטסאפ עם פרטי הפנייה."
               : "נפתח המייל עם פרטי הפנייה."}
           </p>
-          <p className="mt-2 text-sm text-silver">
+          <p className="mt-2 text-sm text-muted">
             אם החלון לא נפתח,{" "}
-            <a href={result.href} className="text-ivory underline decoration-gold/40 underline-offset-4" target={result.channel === "wa" ? "_blank" : undefined} rel="noopener noreferrer">
+            <a href={result.href} className="inline-link" target={result.channel === "wa" ? "_blank" : undefined} rel="noopener noreferrer">
               לחצו כאן
             </a>
             .
           </p>
-          <pre className="mt-4 overflow-x-auto whitespace-pre-wrap font-sans text-sm text-silver">{result.text}</pre>
+          <pre className="mt-4 overflow-x-auto whitespace-pre-wrap font-sans text-sm text-muted">{result.text}</pre>
         </div>
       ) : null}
     </form>
+    <GuestPlan guests={fields.guests} />
+    </div>
+  );
+}
+
+function guestCount(guests: string) {
+  const value = Number(guests);
+  return Number.isFinite(value) ? Math.max(0, Math.min(319, Math.floor(value))) : 0;
+}
+
+/** Phones: the plan sits right under the guest field, so it answers while typing. */
+function GuestPlanCompact({ guests }: { guests: string }) {
+  const n = guestCount(guests);
+  return (
+    <div className="mt-5 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4 bg-paper p-3 lg:hidden" aria-hidden="true">
+      <div>
+        <p className="mx-auto mb-2 w-3/4 border-b-[3px] border-ink pb-0.5 text-center text-xs font-medium text-muted">במה ומסך</p>
+        <div className="aspect-[21/14] w-full">
+          <SeatField mode="plan" filled={n} />
+        </div>
+      </div>
+      <p className="nums pb-1 text-center leading-none">
+        <span className="display block text-[3.4rem] text-house">{n}</span>
+        <span className="mt-1 block text-sm text-muted">מתוך 319</span>
+      </p>
+    </div>
+  );
+}
+
+function GuestPlan({ guests }: { guests: string }) {
+  const n = guestCount(guests);
+  return (
+    <aside className="hidden lg:col-span-5 lg:block" aria-label="תפוסת האולם לפי כמות המשתתפים">
+      <div className="lg:sticky lg:top-24">
+        <div className="bg-paper p-4 sm:p-6">
+          <p className="mx-auto mb-4 w-3/4 border-b-4 border-ink pb-1 text-center text-sm font-medium text-muted">במה ומסך</p>
+          <div className="aspect-[21/16] w-full">
+            <SeatField mode="plan" filled={n} />
+          </div>
+        </div>
+        <p className="nums mt-5 leading-none" aria-live="polite">
+          <span className="display text-[clamp(4.5rem,3rem+4vw,7rem)] text-house">{n}</span>
+          <span className="display text-[2.2rem] text-muted"> / 319</span>
+        </p>
+        <p className="mt-3 max-w-[26rem] text-muted">
+          {n === 0
+            ? "המספר שתזינו בשדה כמות המשתתפים יתמלא כאן על מפת האולם, מהשורה הקרובה לבמה."
+            : n >= 319
+              ? "האולם מלא: כל 319 המקומות."
+              : `${n} מקומות מתוך 319, מהשורה הקרובה לבמה.`}
+        </p>
+      </div>
+    </aside>
   );
 }
 
@@ -274,10 +333,10 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="mb-1 block text-sm text-silver">
+      <label htmlFor={id} className="mb-1.5 block text-[0.9375rem] font-medium">
         {label}
         {required ? (
-          <span className="text-gold" aria-hidden="true">
+          <span className="text-house" aria-hidden="true">
             {" "}
             *
           </span>
@@ -285,7 +344,7 @@ function Field({
       </label>
       {children}
       {error ? (
-        <p id={`${id}-error`} className="mt-1 text-sm text-[#ffb4b4]">
+        <p id={`${id}-error`} className="mt-1.5 text-sm font-medium text-house">
           {error}
         </p>
       ) : null}

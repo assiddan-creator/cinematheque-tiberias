@@ -1,34 +1,34 @@
 import { ScreeningsBrowser } from "../components/Screenings";
+import { Fresh } from "../components/Fresh";
 import { PageIntro } from "../components/PageIntro";
 import { links } from "../content";
-import { usePageTitle } from "../lib/usePageTitle";
-import { container } from "../ui";
+import { usePageMeta } from "../lib/usePageTitle";
 import { ExternalLink } from "../components/ExternalLink";
 
 export function ScreeningsPage() {
-  usePageTitle("סרטים ומופעים — סינמטק טבריה");
+  usePageMeta("/screenings");
 
   return (
-    <div className="pb-16">
+    <div className="pb-20">
       <PageIntro
         title="סרטים, מנויים ומופעים"
         lede="כרטיסים להקרנות נרכשים בתרבות טבריה. מופעי סטנדאפ והופעות חיות מופיעים גם בלוח טיקצ׳אק."
       >
-        <p className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm">
-          <ExternalLink href={links.cinematheque} className="text-ivory underline decoration-gold/40 underline-offset-4">
+        <p className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[0.9375rem]">
+          <ExternalLink href={links.cinematheque} className="inline-link">
             עמוד הסינמטק
           </ExternalLink>
-          <ExternalLink href={links.allShows} className="text-ivory underline decoration-gold/40 underline-offset-4">
+          <ExternalLink href={links.allShows} className="inline-link">
             כל המופעים
           </ExternalLink>
-          <ExternalLink href={links.tickchak} className="text-ivory underline decoration-gold/40 underline-offset-4">
+          <ExternalLink href={links.tickchak} className="inline-link">
             טיקצ׳אק
           </ExternalLink>
         </p>
       </PageIntro>
-      <div className={`${container} pb-4`}>
+      <Fresh>
         <ScreeningsBrowser />
-      </div>
+      </Fresh>
     </div>
   );
 }

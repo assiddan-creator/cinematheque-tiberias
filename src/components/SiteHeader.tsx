@@ -1,16 +1,14 @@
-import { Menu, X } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { links, venue } from "../content";
 import { ExternalLink } from "./ExternalLink";
-import { goldButton } from "../ui";
+import { btnRed } from "../ui";
 
 const items = [
   { to: "/screenings", label: "סרטים ומופעים" },
-  { to: "/events", label: "אירועים וכנסים" },
+  { to: "/events", label: "השכרת האולם" },
   { to: "/events#education", label: "הסינמטק החינוכי" },
-  { to: "/tech", label: "מפרט טכני למפיקים" },
+  { to: "/tech", label: "מפרט טכני" },
 ];
 
 function isCurrent(pathname: string, hash: string, to: string) {
@@ -20,116 +18,118 @@ function isCurrent(pathname: string, hash: string, to: string) {
   return pathname === path;
 }
 
+function Wordmark() {
+  return (
+    <span className="flex items-center gap-2.5">
+      <svg viewBox="0 0 28 28" className="size-7 shrink-0" aria-hidden="true">
+        <rect x="3" y="3" width="22" height="15" rx="7" fill="#9e1430" />
+        <rect x="1.5" y="19" width="25" height="6" rx="3" fill="#6f0c22" />
+      </svg>
+      <span className="leading-none">
+        <span className="block whitespace-nowrap font-display text-[1.75rem] font-bold leading-[0.8] sm:text-[1.9rem]">{venue.name}</span>
+        <span className="mt-1 hidden text-[0.75rem] font-medium text-muted sm:block">מרכז תרבות, קולנוע וכנסים</span>
+      </span>
+    </span>
+  );
+}
+
 export function SiteHeader() {
   const { pathname, hash } = useLocation();
   const [open, setOpen] = useState(false);
   const menuId = useId();
   const menuButton = useRef<HTMLButtonElement>(null);
-  const restoreFocus = useRef(false);
-  const reduce = useReducedMotion();
+  const panel = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setOpen(false);
   }, [pathname, hash]);
 
   useEffect(() => {
-    if (!open) {
-      if (restoreFocus.current) {
-        menuButton.current?.focus();
-        restoreFocus.current = false;
-      }
-      return;
-    }
+    if (!open) return;
+    const first = panel.current?.querySelector<HTMLElement>("a");
+    first?.focus();
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        restoreFocus.current = true;
         setOpen(false);
+        menuButton.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab" || !panel.current) return;
+      const focusables = [menuButton.current, ...panel.current.querySelectorAll<HTMLElement>("a")].filter(
+        Boolean,
+      ) as HTMLElement[];
+      const index = focusables.indexOf(document.activeElement as HTMLElement);
+      const nextIndex = event.shiftKey ? index - 1 : index + 1;
+      if (nextIndex < 0 || nextIndex >= focusables.length) {
+        event.preventDefault();
+        focusables[nextIndex < 0 ? focusables.length - 1 : 0].focus();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  function closeFromLink() {
-    restoreFocus.current = false;
-    setOpen(false);
-  }
-
   return (
-    <header className="no-print sticky top-0 z-40 border-b border-gold/20 bg-void/95 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
-        <Link to="/" className="min-w-0 leading-tight" onClick={closeFromLink}>
-          <span className="block font-display text-lg text-ivory sm:text-xl">{venue.name}</span>
-          <span className="block text-xs text-silver sm:text-sm">מרכז תרבות, קולנוע וכנסים</span>
+    <header className="no-print sticky top-0 z-50 border-b border-[var(--line)] bg-ground/95 backdrop-blur-sm">
+      <div className="wrap flex min-h-[3.75rem] items-center gap-2.5 sm:min-h-[4.25rem] sm:gap-4">
+        <Link to="/" className="util-link min-w-0 shrink-0 py-2">
+          <Wordmark />
         </Link>
 
-        <nav className="me-auto ms-6 hidden items-center gap-5 lg:flex" aria-label="ניווט ראשי">
+        <nav className="ms-8 hidden items-center gap-7 lg:flex" aria-label="ניווט ראשי">
           {items.map((item) => {
             const current = isCurrent(pathname, hash, item.to);
             return (
-              <Link
-                key={item.to}
-                to={item.to}
-                aria-current={current ? "page" : undefined}
-                className={`text-sm ${current ? "text-ivory" : "text-silver hover:text-ivory"}`}
-              >
+              <Link key={item.to} to={item.to} aria-current={current ? "page" : undefined} className="navlink">
                 {item.label}
               </Link>
             );
           })}
         </nav>
 
-        <ExternalLink href={links.cinematheque} className={`${goldButton} ms-auto shrink-0 px-3 text-xs sm:px-4 sm:text-sm lg:ms-0`}>
+        <ExternalLink href={links.cinematheque} className={`${btnRed} btn-sm ms-auto shrink-0 px-3 sm:px-4`}>
           לרכישת כרטיסים
         </ExternalLink>
 
         <button
           ref={menuButton}
           type="button"
-          className="inline-flex size-11 items-center justify-center border border-gold/25 lg:hidden"
+          className="btn btn-line btn-sm min-w-[4.25rem] px-3 lg:hidden"
           aria-expanded={open}
           aria-controls={menuId}
-          onClick={() => {
-            restoreFocus.current = false;
-            setOpen((value) => !value);
-          }}
+          onClick={() => setOpen((value) => !value)}
         >
-          {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-          <span className="sr-only">{open ? "סגירת תפריט" : "פתיחת תפריט"}</span>
+          {open ? "סגירה" : "תפריט"}
         </button>
       </div>
 
-      <AnimatePresence>
-        {open ? (
-          <motion.nav
-            id={menuId}
-            aria-label="ניווט ראשי"
-            className="border-t border-gold/20 bg-void lg:hidden"
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={reduce ? undefined : { opacity: 0 }}
-            transition={{ duration: reduce ? 0 : 0.2 }}
-          >
-            <ul className="mx-auto flex w-full max-w-6xl flex-col px-4 py-2 sm:px-6">
-              {items.map((item) => {
-                const current = isCurrent(pathname, hash, item.to);
-                return (
-                  <li key={item.to}>
-                    <Link
-                      to={item.to}
-                      aria-current={current ? "page" : undefined}
-                      className="flex min-h-11 items-center text-base text-ivory"
-                      onClick={closeFromLink}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </motion.nav>
-        ) : null}
-      </AnimatePresence>
+      <div
+        id={menuId}
+        ref={panel}
+        hidden={!open}
+        className="border-t border-[var(--line)] bg-ground lg:hidden"
+      >
+        <nav aria-label="ניווט ראשי בטלפון" className="wrap">
+          <ul className="py-3">
+            {[{ to: "/", label: "עמוד הבית" }, ...items].map((item) => {
+              const current = item.to === "/" ? pathname === "/" : isCurrent(pathname, hash, item.to);
+              return (
+                <li key={item.to} className="border-b border-[var(--line)] last:border-0">
+                  <Link
+                    to={item.to}
+                    aria-current={current ? "page" : undefined}
+                    className="row-hover flex min-h-14 items-center justify-between gap-4 font-display text-[2.4rem] font-bold leading-none"
+                    onClick={() => setOpen(false)}
+                  >
+                    <span>{item.label}</span>
+                    {current ? <span className="seat-mark" aria-hidden="true" /> : null}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
     </header>
   );
 }

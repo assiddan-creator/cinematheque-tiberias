@@ -1,25 +1,22 @@
-import { Link } from "react-router-dom";
 import { screenings } from "../content";
-import { upcomingShows } from "../schedule";
-import { SplitHero } from "../components/SplitHero";
-import { UpcomingStrip } from "../components/Screenings";
-import { usePageTitle } from "../lib/usePageTitle";
-import { lineButton } from "../ui";
+import { Fresh } from "../components/Fresh";
+import { HomeHero } from "../components/HomeHero";
+import { PassBand, Timetable } from "../components/Screenings";
+import { RentalTeaser } from "../components/RentalTeaser";
+import { usePageMeta } from "../lib/usePageTitle";
 
 export function HomePage() {
-  usePageTitle("סינמטק טבריה — קולנוע, תרבות וכנסים");
-  const hasShows = upcomingShows(screenings, 1).length > 0;
+  usePageMeta("/");
+  const pass = screenings.find((item) => item.variant === "feature");
 
   return (
     <>
-      <SplitHero />
-      {hasShows ? <UpcomingStrip /> : null}
-      <section className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-10 sm:px-6 lg:px-8">
-        <p className="max-w-xl text-silver">הלוח המלא, המנויים ומופעי הסטנדאפ נמצאים בעמוד הסרטים.</p>
-        <Link to="/screenings" className={lineButton}>
-          לכל הסרטים והמופעים
-        </Link>
-      </section>
+      <HomeHero />
+      <Fresh>
+        <Timetable />
+      </Fresh>
+      {pass ? <PassBand item={pass} /> : null}
+      <RentalTeaser />
     </>
   );
 }

@@ -4,64 +4,69 @@ import { TechGallery } from "../components/TechGallery";
 import { TrussDiagram } from "../components/TrussDiagram";
 import { ExternalLink } from "../components/ExternalLink";
 import { links, quickSpecs, specGroups, unpublished, venue } from "../content";
-import { usePageTitle } from "../lib/usePageTitle";
-import { container } from "../ui";
+import { usePageMeta } from "../lib/usePageTitle";
 
 export function TechPage() {
-  usePageTitle("מפרט טכני למפיקים — סינמטק טבריה");
+  usePageMeta("/tech");
 
   return (
-    <div id="tech-root" className="tech-sheet pb-16">
+    <div id="tech-root" className="tech-sheet pb-20">
       <PageIntro
         title="מפרט טכני למפיקים וטכנאים"
         lede="נתוני האולם, הבמה, ההקרנה, הסאונד, התאורה והפריקה של סינמטק טבריה. מה שלא מופיע כאן עדיין לא פורסם, ואפשר לברר אותו בטלפון."
       >
-        <p className="mt-4 text-sm text-silver">
-          {venue.place}, {venue.street}, {venue.city}
-          <span className="mx-2 text-mist">/</span>
-          <a href={`tel:${venue.phoneTel}`} className="text-ivory">
+        <p className="mt-5 flex flex-wrap gap-x-5 gap-y-1 text-[0.9375rem]">
+          <span className="text-muted">
+            {venue.place}, {venue.street}, {venue.city}
+          </span>
+          <a href={`tel:${venue.phoneTel}`} className="inline-link nums">
             {venue.phoneDisplay}
           </a>
-          <span className="mx-2 text-mist">/</span>
-          <a href={`mailto:${venue.email}`} className="text-ivory">
+          <a href={`mailto:${venue.email}`} className="inline-link">
             {venue.email}
           </a>
         </p>
         <TechActions />
       </PageIntro>
 
-      <div className={`${container} grid gap-10`}>
+      <div className="wrap grid gap-20">
         <section aria-labelledby="quick-specs">
           <h2 id="quick-specs" className="sr-only">
             נתונים עיקריים
           </h2>
-          <dl className="grid gap-px bg-gold/20 sm:grid-cols-2 lg:grid-cols-4">
-            {quickSpecs.map((item) => (
-              <div key={item.label} className="bg-stone p-4">
-                <dt className="text-sm text-silver">{item.label}</dt>
-                <dd className="nums mt-1 font-display text-3xl">{item.value}</dd>
-                <dd className="text-sm text-mist">{item.note}</dd>
+          <dl className="grid grid-cols-2 border-t-2 border-ink lg:grid-cols-4">
+            {quickSpecs.map((item, index) => (
+              <div
+                key={item.label}
+                className={`border-b border-[var(--line)] py-5 pe-4 ${index % 2 === 1 ? "ps-4 border-s" : ""} lg:border-s-0 lg:ps-0 ${index > 0 ? "lg:border-s lg:ps-5" : ""}`}
+              >
+                <dt className="text-sm font-medium text-muted">{item.label}</dt>
+                <dd className="nums display mt-2 text-[clamp(2.6rem,1.8rem+2.4vw,4.2rem)] leading-[0.85]">{item.value}</dd>
+                <dd className="mt-2 text-sm text-muted">{item.note}</dd>
               </div>
             ))}
           </dl>
         </section>
 
-        <section aria-labelledby="hall-title" className="grid gap-8">
-          <h2 id="hall-title" className="display-section">
+        <section aria-labelledby="hall-title">
+          <h2 id="hall-title" className="display t-l">
             נתוני האולם והבמה
           </h2>
-          <div className="grid gap-4 lg:grid-cols-2">
+          <div className="mt-8 grid gap-x-8 gap-y-12 lg:grid-cols-2">
             {specGroups.map((group) => (
-              <article key={group.title} className="border border-gold/20 bg-stone p-5">
-                <h3 className="text-2xl">{group.title}</h3>
-                <dl className="mt-4 grid gap-3">
+              <article key={group.title}>
+                <h3 className="display border-b-2 border-ink pb-2 text-[2.2rem] leading-none">{group.title}</h3>
+                <dl>
                   {group.rows.map((row) => (
-                    <div key={row.label} className="border-t border-gold/20 pt-3">
-                      <dt className="text-sm text-silver">{row.label}</dt>
-                      <dd className="mt-1">
+                    <div
+                      key={row.label}
+                      className="grid gap-1 border-b border-[var(--line)] py-3 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-4"
+                    >
+                      <dt className="font-semibold">{row.label}</dt>
+                      <dd className="text-muted">
                         {row.value}{" "}
                         {row.href && row.hrefLabel ? (
-                          <ExternalLink href={row.href} className="text-ivory underline decoration-gold/40 underline-offset-4">
+                          <ExternalLink href={row.href} className="inline-link text-ink">
                             {row.hrefLabel}
                           </ExternalLink>
                         ) : null}
@@ -75,53 +80,55 @@ export function TechPage() {
         </section>
 
         <section aria-labelledby="truss-heading">
-          <h2 id="truss-heading" className="display-section">
+          <h2 id="truss-heading" className="display t-l">
             ארבעת הצוגים מעל הבמה
           </h2>
-          <p className="mt-3 max-w-2xl text-silver">
+          <p className="mt-4 max-w-[40rem] text-muted">
             מבט על. הצוג הקדמי, הקרוב לקהל, פנוי לתלייה. שאר הצוגים תפוסים בפנסים ובמסך.
           </p>
-          <div className="mt-6">
+          <div className="mt-8">
             <TrussDiagram />
           </div>
         </section>
 
-        <section aria-labelledby="missing-title">
-          <h2 id="missing-title" className="text-2xl">
+        <section aria-labelledby="missing-title" className="grid gap-6 lg:grid-cols-12 lg:gap-8">
+          <h2 id="missing-title" className="display t-m lg:col-span-4">
             מה עדיין לא פורסם
           </h2>
-          <ul className="mt-3 grid max-w-2xl gap-2 text-silver">
-            {unpublished.map((item) => (
-              <li key={item} className="border-t border-gold/20 pt-2">
-                {item}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-3 text-sm text-silver">
-            לבירור:{" "}
-            <a href={`tel:${venue.phoneTel}`} className="text-ivory">
-              {venue.phoneDisplay}
-            </a>{" "}
-            או{" "}
-            <a href={`mailto:${venue.email}`} className="text-ivory">
-              {venue.email}
-            </a>
-            . פרטי נגישות לקהל:{" "}
-            <ExternalLink href={links.access} className="text-ivory underline decoration-gold/40 underline-offset-4">
-              הסדרי נגישות באולם
-            </ExternalLink>
-            .
-          </p>
+          <div className="lg:col-span-8">
+            <ul className="border-t-2 border-ink">
+              {unpublished.map((item) => (
+                <li key={item} className="border-b border-[var(--line)] py-3">
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 text-muted">
+              לבירור:{" "}
+              <a href={`tel:${venue.phoneTel}`} className="inline-link nums text-ink">
+                {venue.phoneDisplay}
+              </a>{" "}
+              או{" "}
+              <a href={`mailto:${venue.email}`} className="inline-link text-ink">
+                {venue.email}
+              </a>
+              . פרטי נגישות לקהל:{" "}
+              <ExternalLink href={links.access} className="inline-link text-ink">
+                הסדרי נגישות באולם
+              </ExternalLink>
+              .
+            </p>
+          </div>
         </section>
 
         <section aria-labelledby="gallery-title">
-          <h2 id="gallery-title" className="display-section">
+          <h2 id="gallery-title" className="display t-l">
             גלריה להחלפה בצילומי האולם
           </h2>
-          <p className="mt-3 max-w-2xl text-silver">
+          <p className="mt-4 max-w-[40rem] text-muted">
             הסקיצות מסמנות איפה תיכנס כל תמונה: הבמה, הפנסים, המסך המקופל, מסלול הפריקה, חדרי ההלבשה ושקעי החשמל.
           </p>
-          <div className="mt-6">
+          <div className="mt-8">
             <TechGallery />
           </div>
         </section>

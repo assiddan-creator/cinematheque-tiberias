@@ -6,3 +6,7 @@ dist
 _extract-links.js
 _extract-imgs.js
 cinematheque_tiberias_spec_and_tech_rider.md
+dist-ssr
+.shots
+.jury
+media/
