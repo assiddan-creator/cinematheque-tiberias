@@ -69,7 +69,7 @@ export function HomeHero() {
           <div id="hero-logo" className="-ms-1 w-full max-w-[34rem] lg:-ms-3">
             <Logo tone="red" className="block h-auto w-full" />
           </div>
-          <p className="mt-4 max-w-[22rem] text-[1rem] leading-snug text-white/90 sm:mt-5 sm:text-[1.0625rem]">
+          <p className="over-seats mt-4 max-w-[22rem] text-[1rem] leading-snug text-white sm:mt-5 sm:text-[1.0625rem]">
             {venue.place}, {venue.street.split(" / ")[0]}, {venue.city}. סרטי ילדים מדובבים, טרום-בכורה, מופעים וכנסים.
           </p>
         </div>
@@ -83,14 +83,14 @@ export function HomeHero() {
             <Link to="/screenings" className={btnWhite}>
               כל הסרטים והמועדים
             </Link>
-            <Link to="/events" className={btnGhost}>
+            <Link to="/events" className={`${btnGhost} bg-house/90`}>
               השכרת האולם
             </Link>
           </div>
         </div>
       </div>
 
-      <p className="nums pointer-events-none absolute bottom-4 end-[var(--gutter)] text-end text-sm font-medium text-white/85 sm:bottom-6">
+      <p className="nums pointer-events-none absolute bottom-4 end-[var(--gutter)] bg-house/85 px-2.5 py-1.5 text-end text-sm font-medium text-white sm:bottom-6">
         <span className="display block text-[2.6rem] leading-none text-white">{seats.value}</span>
         {seats.label}, {seats.note}
       </p>

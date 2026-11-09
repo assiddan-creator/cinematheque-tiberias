@@ -7,12 +7,13 @@ import { usePageMeta } from "../lib/usePageTitle";
 import { photos, videos } from "../media";
 import { Photo } from "../components/Photo";
 import { LoopVideo } from "../components/LoopVideo";
+import { SeatIcon } from "../components/SeatIcon";
 import { btnLine, btnRed } from "../ui";
 
 const packageMedia: Record<string, { photo: (typeof photos)[keyof typeof photos]; caption: string }> = {
   business: { photo: photos.eventWide, caption: "אירוע באולם מלא, עם מצגת על המסך" },
   education: { photo: photos.educationScreening, caption: "מפגש של הסינמטק החינוכי באולם" },
-  private: { photo: photos.lectureStage, caption: "הרצאה על הבמה, כשהמסך מקופל למעלה" },
+  private: { photo: photos.stageToHall, caption: "הבמה פנויה לכל רוחבה, מבט מהבמה אל האולם" },
 };
 
 export function EventsPage() {
@@ -52,8 +53,8 @@ export function EventsPage() {
             >
               <article className="grid gap-6 py-10 lg:grid-cols-12 lg:gap-8">
                 <div className="lg:col-span-5">
-                  <h2 className="display t-m flex items-start gap-3">
-                    <span className="seat-mark mt-2 shrink-0 !h-6 !w-5" aria-hidden="true" />
+                  <h2 className="display t-m flex items-baseline gap-3">
+                    <SeatIcon />
                     <span>{item.title}</span>
                   </h2>
                   {packageMedia[item.id] ? (
@@ -65,12 +66,20 @@ export function EventsPage() {
                     </figure>
                   ) : null}
                   {item.id === "business" ? (
-                    <figure className="mt-5">
-                      <div className="aspect-[16/9] overflow-hidden bg-ink">
-                        <LoopVideo {...videos.lobby} />
-                      </div>
-                      <figcaption className="mt-2 text-sm text-muted">הלובי בקבלת פנים לפני אירוע</figcaption>
-                    </figure>
+                    <div className="mt-4 grid grid-cols-2 gap-3">
+                      <figure>
+                        <div className="aspect-[4/3] overflow-hidden bg-ink">
+                          <Photo photo={photos.lobby} sizes="(min-width: 1024px) 19vw, 50vw" />
+                        </div>
+                        <figcaption className="mt-2 text-sm text-muted">הלובי לקבלת פנים ולקייטרינג</figcaption>
+                      </figure>
+                      <figure>
+                        <div className="aspect-[4/3] overflow-hidden bg-ink">
+                          <LoopVideo {...videos.lobby} />
+                        </div>
+                        <figcaption className="mt-2 text-sm text-muted">הלובי לפני אירוע</figcaption>
+                      </figure>
+                    </div>
                   ) : null}
                 </div>
                 <div className="lg:col-span-7">

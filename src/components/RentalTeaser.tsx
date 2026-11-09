@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { packages, quickSpecs } from "../content";
+import { SeatIcon } from "./SeatIcon";
 
 const rowLink = "row-hover row-link -mx-3 grid min-h-24 px-3 grid-cols-[minmax(0,1fr)_auto] items-center gap-6 py-5";
 const rowTitle = "row-title display text-[clamp(1.9rem,1.4rem+1.4vw,2.75rem)] leading-[0.95]";
@@ -34,7 +35,7 @@ export function RentalTeaser() {
                   <span className={rowTitle}>{item.title}</span>
                   <span className="mt-2 block max-w-[34rem] text-muted">{item.cta}</span>
                 </span>
-                <span className="seat-mark !h-8 !w-7" aria-hidden="true" />
+                <SeatIcon />
               </Link>
             </li>
           ))}
@@ -44,7 +45,7 @@ export function RentalTeaser() {
                 <span className={rowTitle}>מפרט טכני למפיקים</span>
                 <span className="mt-2 block text-muted">צוגים, הקרנה, סאונד, חשמל ופריקה</span>
               </span>
-              <span className="seat-mark !h-8 !w-7" aria-hidden="true" />
+              <SeatIcon />
             </Link>
           </li>
         </ul>

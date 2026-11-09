@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { trusses } from "../content";
+import { SeatIcon } from "./SeatIcon";
 
 const positions = [
   { id: "4", y: 78 },
@@ -70,7 +71,7 @@ export function TrussDiagram() {
               onClick={() => setActive(truss.id)}
               className={`row-hover border-b px-1 py-4 text-start transition-colors ${pressed ? "border-house bg-paper" : "border-[var(--line)]"}`}
             >
-              <span className="display flex items-center gap-3 text-[2rem] leading-none"><span className="seat-mark !h-5 !w-4" aria-hidden="true" />{truss.name}</span>
+              <span className="display flex items-center gap-3 text-[2rem] leading-none"><SeatIcon />{truss.name}</span>
               <span className="mt-1.5 block text-muted">{truss.detail}</span>
             </button>
           );

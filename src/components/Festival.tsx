@@ -2,6 +2,7 @@ import { festival } from "../festival";
 import { photos, videos } from "../media";
 import { LoopVideo } from "./LoopVideo";
 import { Photo } from "./Photo";
+import { SeatIcon } from "./SeatIcon";
 
 /** Home: a short band, one photo and one sentence. */
 export function FestivalBand() {
@@ -49,7 +50,7 @@ export function FestivalSection() {
           <ul className="mt-2 border-t-2 border-ink">
             {festival.activities.map((item) => (
               <li key={item} className="flex items-center gap-3 border-b border-[var(--line)] py-2.5">
-                <span className="seat-mark !h-3 !w-2.5 shrink-0" aria-hidden="true" />
+                <SeatIcon />
                 {item}
               </li>
             ))}

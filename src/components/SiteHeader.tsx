@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { links, venue } from "../content";
 import { ExternalLink } from "./ExternalLink";
 import { Logo } from "./Logo";
+import { SeatIcon } from "./SeatIcon";
 import { btnRed } from "../ui";
 
 const items = [
@@ -133,7 +134,7 @@ export function SiteHeader() {
                     onClick={() => setOpen(false)}
                   >
                     <span>{item.label}</span>
-                    {current ? <span className="seat-mark" aria-hidden="true" /> : null}
+                    {current ? <SeatIcon /> : null}
                   </Link>
                 </li>
               );

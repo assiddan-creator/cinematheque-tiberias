@@ -12,6 +12,7 @@ import { futureDates, isListed } from "../schedule";
 import { timetable, whenParts } from "../lib/when";
 import { btnLine, btnRed, btnWhite } from "../ui";
 import { ExternalLink } from "./ExternalLink";
+import { SeatIcon } from "./SeatIcon";
 import { photos } from "../media";
 import { Photo } from "./Photo";
 import { FestivalSection } from "./Festival";
@@ -86,7 +87,7 @@ export function Timetable({ limit = 7 }: { limit?: number }) {
                     </div>
                     <div className="min-w-0">
                       <p className="flex flex-wrap items-center gap-x-2 text-sm font-medium text-muted">
-                        <span className="seat-mark !h-3 !w-2.5" aria-hidden="true" />
+                        <SeatIcon />
                         <span className={parts.relative ? "text-house" : undefined}>
                           {parts.relative ? `${parts.relative}, ` : ""}
                           {parts.weekday}
@@ -151,7 +152,7 @@ function ShowRow({ item, filter }: { item: Screening; filter: FilterId }) {
         </div>
         <div className="min-w-0">
           <p className="flex items-center gap-2 text-sm font-medium text-muted">
-            <span className="seat-mark !h-3 !w-2.5" aria-hidden="true" />
+            <SeatIcon />
             {labelFor(item, filter)}
           </p>
           <h3 className="display mt-2 text-[clamp(2rem,1.4rem+1.8vw,3.1rem)] leading-[0.92]">{item.title}</h3>
@@ -196,7 +197,7 @@ function BoardRow({ item, filter }: { item: Screening; filter: FilterId }) {
     <li className="row-hover grid gap-3 border-b border-[var(--line)] py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:gap-8">
       <div>
         <p className="flex items-center gap-2 text-sm font-medium text-muted">
-          <span className="seat-mark !h-3 !w-2.5" aria-hidden="true" />
+          <SeatIcon />
           {labelFor(item, filter)}. השעות בעמוד הרכישה.
         </p>
         <h3 className="display mt-1.5 text-[clamp(1.75rem,1.3rem+1.2vw,2.4rem)] leading-[0.95]">{item.title}</h3>

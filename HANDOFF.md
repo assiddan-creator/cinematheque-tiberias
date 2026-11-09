@@ -17,10 +17,14 @@
 - The owner confirmed parental consent for every file in `media/`.
 - Used: 3, 5, 10, 14, 15, 18, 19 (hall and shows); 32, 37, 38, 41, 42 (date 16-20.8.2026 erased from the slide), 43, 49 (festival and education); videos "11.48.28 AM (1)" (lobby) and "11.48.23 AM (1)" (festival full hall, 10 s).
 - Data: `src/media.ts`; festival text: `src/festival.ts` (only the owner's facts); tech gallery entries in `content.ts` (`gallery`).
-- Gallery sketches still waiting for photos: Thomas PARs on the battens, load-in route, dressing rooms, power sockets.
+- Empty-hall set (media/‏‏תיקיה חדשה, a (1) to a (10)): home "באולם" uses a (9), a (7), a (6); events uses a (5) (private/lectures) and a (10) (lobby, beside the lobby clip); tech gallery uses a (6) for the PARs, a (8) for the dressing room and a (2) (control booth), plus 15, 3 and 10 moved from home. a (1), a (3), a (4) not used (lobby duplicates).
+- Gallery sketches still waiting for photos: load-in route, power sockets.
+
+## Tech spec
+- Owner's data (2026-11-09) in `content.ts` `specGroups`: projector NEC NC1201L-A (DLP Cinema, laser, 2K, 3D, screens up to 12 m per the maker), sound 5.1 for films + 2 FBT J-Maxx 112A for shows, mixer QL-Milano AB-4, 2 TRX Audio digital wireless mics. `unpublished` keeps stage height, open-screen size, wireless mic model. The WhatsApp share text in `messages.ts` follows the spec.
 
 ## Jury
 - Round 1: branch 7.0, main 6.7. Round 2 (media + fixes): 7.5. Pre-merge (logo + festival, fresh critic): 7.25, no critical findings. Fix list in `.jury/127.0.0.1-4401/scorecard.md` (git-ignored).
 
 ## Next
-- Production domain for canonical. Photos for the four remaining sketches.
+- Production domain for canonical. Photos for the load-in route and power sockets.
