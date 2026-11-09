@@ -12,6 +12,8 @@ import { futureDates, isListed } from "../schedule";
 import { timetable, whenParts } from "../lib/when";
 import { btnLine, btnRed, btnWhite } from "../ui";
 import { ExternalLink } from "./ExternalLink";
+import { photos } from "../media";
+import { Photo } from "./Photo";
 
 export function Poster({ src, title, eager = false }: { src?: string; title: string; eager?: boolean }) {
   const [failed, setFailed] = useState(false);
@@ -266,6 +268,13 @@ export function ScreeningsBrowser() {
             </ul>
           </section>
         ) : null}
+
+        <figure className="mt-14">
+          <div className="aspect-[4/3] overflow-hidden bg-ink sm:aspect-[21/9]">
+            <Photo photo={photos.hallScreening} sizes="(min-width: 1400px) 1340px, 100vw" className="object-[50%_35%]" />
+          </div>
+          <figcaption className="mt-2 text-sm text-muted">הקרנה באולם הסינמטק, מבט מהשורות האחוריות</figcaption>
+        </figure>
 
         {boards.length ? (
           <section aria-labelledby="boards-title" className="mt-14">

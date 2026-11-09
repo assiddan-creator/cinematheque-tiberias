@@ -14,7 +14,7 @@ export function SiteFooter() {
         </div>
 
         <address className="not-italic lg:col-span-3">
-          <h2 className="text-sm font-semibold text-white/70">ביקור ופנייה</h2>
+          <h2 className="font-sans text-sm font-semibold leading-normal text-white/75">ביקור ופנייה</h2>
           <ul className="mt-3 space-y-1.5">
             <li>
               <ExternalLink href={venue.maps} className={linkClass}>
@@ -40,7 +40,7 @@ export function SiteFooter() {
         </address>
 
         <nav aria-label="קישורים נוספים" className="lg:col-span-3">
-          <h2 className="text-sm font-semibold text-white/70">באתר ובתרבות טבריה</h2>
+          <h2 className="font-sans text-sm font-semibold leading-normal text-white/75">באתר ובתרבות טבריה</h2>
           <ul className="mt-3 grid grid-cols-2 gap-x-6 gap-y-1.5">
             <li>
               <Link to="/screenings" className={linkClass}>

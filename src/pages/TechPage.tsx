@@ -123,10 +123,10 @@ export function TechPage() {
 
         <section aria-labelledby="gallery-title">
           <h2 id="gallery-title" className="display t-l">
-            גלריה להחלפה בצילומי האולם
+            הבמה והאולם בתמונות
           </h2>
           <p className="mt-4 max-w-[40rem] text-muted">
-            הסקיצות מסמנות איפה תיכנס כל תמונה: הבמה, הפנסים, המסך המקופל, מסלול הפריקה, חדרי ההלבשה ושקעי החשמל.
+            חזית הבמה והמסך המקופל מצולמים מהאולם. לפנסים, למסלול הפריקה, לחדרי ההלבשה ולשקעי החשמל עדיין אין צילום, ובמקומם מוצגת סקיצה.
           </p>
           <div className="mt-8">
             <TechGallery />

@@ -4,7 +4,16 @@ import { PageIntro } from "../components/PageIntro";
 import { QuoteForm } from "../components/QuoteForm";
 import { ExternalLink } from "../components/ExternalLink";
 import { usePageMeta } from "../lib/usePageTitle";
+import { photos, videos } from "../media";
+import { Photo } from "../components/Photo";
+import { LoopVideo } from "../components/LoopVideo";
 import { btnLine, btnRed } from "../ui";
+
+const packageMedia: Record<string, { photo: (typeof photos)[keyof typeof photos]; caption: string }> = {
+  business: { photo: photos.eventWide, caption: "אירוע באולם מלא, עם מצגת על המסך" },
+  education: { photo: photos.workshopModel, caption: "סדנת יצירה: דגם של אולם קולנוע" },
+  private: { photo: photos.lectureStage, caption: "הרצאה על הבמה, כשהמסך מקופל למעלה" },
+};
 
 export function EventsPage() {
   usePageMeta("/events");
@@ -47,6 +56,22 @@ export function EventsPage() {
                     <span className="seat-mark mt-2 shrink-0 !h-6 !w-5" aria-hidden="true" />
                     <span>{item.title}</span>
                   </h2>
+                  {packageMedia[item.id] ? (
+                    <figure className="mt-6">
+                      <div className="aspect-[4/3] overflow-hidden bg-ink">
+                        <Photo photo={packageMedia[item.id].photo} sizes="(min-width: 1024px) 38vw, 100vw" />
+                      </div>
+                      <figcaption className="mt-2 text-sm text-muted">{packageMedia[item.id].caption}</figcaption>
+                    </figure>
+                  ) : null}
+                  {item.id === "business" ? (
+                    <figure className="mt-5">
+                      <div className="aspect-[16/9] overflow-hidden bg-ink">
+                        <LoopVideo {...videos.lobby} />
+                      </div>
+                      <figcaption className="mt-2 text-sm text-muted">הלובי בקבלת פנים לפני אירוע</figcaption>
+                    </figure>
+                  ) : null}
                 </div>
                 <div className="lg:col-span-7">
                   <p className="max-w-[40rem] text-[1.0625rem]">{item.text}</p>

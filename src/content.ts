@@ -352,11 +352,12 @@ export const trusses = [
   },
 ] as const;
 
-export const gallery = [
+export const gallery: { src: string; title: string; caption: string; alt?: string }[] = [
   {
-    src: "/gallery/stage-front.svg",
+    src: "/media/hall-screening-800.webp",
     title: "חזית הבמה והמסך",
-    caption: "סקיצה להחלפה בצילום חזית הבמה.",
+    caption: "מבט מהאולם אל הבמה ומסך הקולנוע בזמן הקרנה.",
+    alt: "מבט מהשורות האחוריות אל חזית הבמה ומסך הקולנוע הגדול בזמן הקרנה, עם גשר התאורה מעל",
   },
   {
     src: "/gallery/pars.svg",
@@ -364,9 +365,10 @@ export const gallery = [
     caption: "סקיצה להחלפה בצילום גשר התאורה.",
   },
   {
-    src: "/gallery/screen-up.svg",
+    src: "/media/stage-screen-up-800.webp",
     title: "המסך מקופל לתקרה",
-    caption: "סקיצה להחלפה בצילום הבמה כשהמסך למעלה.",
+    caption: "הבמה כשמסך הקולנוע למעלה: כל רוחב רצפת העץ פנוי.",
+    alt: "הבמה כשמסך הקולנוע מקופל לתקרה: רצפת עץ לכל רוחב הבמה, מרצה במרכזה והקהל באולם",
   },
   {
     src: "/gallery/load-in.svg",

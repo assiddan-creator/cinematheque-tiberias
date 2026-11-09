@@ -12,9 +12,9 @@ export function ExternalLink({ href, className, children, arrow }: ExternalLinkP
     <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
       {children}
       {arrow ? (
-        <span className="arrow" aria-hidden="true">
-          ←
-        </span>
+        <svg className="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="M14 8H3M7.5 3.5 3 8l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.8" />
+        </svg>
       ) : null}
       <span className="sr-only"> (נפתח בחלון חדש)</span>
     </a>

@@ -175,10 +175,11 @@ export function SeatField({ mode, filled = 0, className }: Props) {
       if (mode === "hall") {
         pointer.strength += ((pointer.active ? 1 : 0) - pointer.strength) * (1 - Math.pow(0.88, ratio));
         const radius = Math.max(70, width * 0.11);
-        // idle: an audience wave crosses the hall every ~11 s
-        const cycle = 11;
-        const phase = (t % cycle) / cycle;
-        const waveX = width * (1.25 - phase * 1.5);
+        // entrance: one audience wave crosses the hall, then the hall settles and only the pointer moves it
+        const cycle = 2.6;
+        const waving = t < cycle;
+        const phase = Math.min(1, t / cycle);
+        const waveX = waving ? width * (1.25 - phase * 1.5) : -1e6;
         const waveW = Math.max(40, width * 0.05);
         const tapAge = gsap.ticker.time - tap.t;
         for (let i = 0; i < seats.length; i++) {
@@ -203,7 +204,7 @@ export function SeatField({ mode, filled = 0, className }: Props) {
           if (Math.abs(next - fold[i]) > 0.001) moving = true;
           fold[i] = next;
         }
-        moving = true; // the wave keeps the hall breathing while it is on screen
+        if (waving || Math.abs((pointer.active ? 1 : 0) - pointer.strength) > 0.02) moving = true;
       } else {
         for (let i = 0; i < seats.length; i++) {
           const target = planTarget(i);

@@ -22,7 +22,7 @@ function Wordmark() {
   return (
     <span className="flex items-center gap-2.5">
       <svg viewBox="0 0 28 28" className="size-7 shrink-0" aria-hidden="true">
-        <rect x="3" y="3" width="22" height="15" rx="7" fill="#9e1430" />
+        <rect className="logo-seat" x="3" y="3" width="22" height="15" rx="7" fill="#9e1430" />
         <rect x="1.5" y="19" width="25" height="6" rx="3" fill="#6f0c22" />
       </svg>
       <span className="leading-none">
@@ -72,7 +72,7 @@ export function SiteHeader() {
   return (
     <header className="no-print sticky top-0 z-50 border-b border-[var(--line)] bg-ground/95 backdrop-blur-sm">
       <div className="wrap flex min-h-[3.75rem] items-center gap-2.5 sm:min-h-[4.25rem] sm:gap-4">
-        <Link to="/" className="util-link min-w-0 shrink-0 py-2">
+        <Link to="/" className="logo util-link min-w-0 shrink-0 py-2">
           <Wordmark />
         </Link>
 
