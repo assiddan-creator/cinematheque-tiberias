@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { categoryLabel, links, quickSpecs, screenings, venue } from "../content";
+import { categoryLabel, links, quickSpecs, screenings } from "../content";
 import { timetable, whenParts } from "../lib/when";
 import { btnGhost, btnWhite } from "../ui";
 import { ExternalLink } from "./ExternalLink";
@@ -69,8 +69,11 @@ export function HomeHero() {
           <div id="hero-logo" className="-ms-1 w-full max-w-[34rem] lg:-ms-3">
             <Logo tone="red" className="block h-auto w-full" />
           </div>
-          <p className="over-seats mt-4 max-w-[22rem] text-[1rem] leading-snug text-white sm:mt-5 sm:text-[1.0625rem]">
-            {venue.place}, {venue.street.split(" / ")[0]}, {venue.city}. סרטי ילדים מדובבים, טרום-בכורה, מופעים וכנסים.
+          <p className="over-seats display mt-4 text-[clamp(2rem,1.5rem+1.6vw,2.9rem)] leading-[0.95] text-white sm:mt-5">
+            המסך עולה, הבמה מתחילה.
+          </p>
+          <p className="over-seats mt-2 text-[1rem] leading-snug text-white sm:text-[1.0625rem]">
+            אולם קולנוע, מופעים וכנסים בטבריה.
           </p>
         </div>
 
