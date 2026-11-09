@@ -8,43 +8,70 @@ import { container, wineButton, lineButton } from "../ui";
 
 export function EventsPage() {
   usePageTitle("השכרת אולם וכנסים — סינמטק טבריה");
+  const [business, ...rest] = packages;
 
   return (
     <div className="pb-16">
       <PageIntro
-        title="השכרת אולם וכנסים"
-        lede="אולם מונגש ל-319 מקומות, עם במה רחבה ומערכות הקרנה וסאונד מתקדמות. מתאים לכנסים, בתי ספר, הקרנות פרטיות ומופעים."
+        title="השכרת האולם לכנסים, לחברות ולבתי ספר"
+        lede="אולם הקולנוע והתיאטרון עומד להשכרה: 319 מקומות ישיבה, במה ברוחב 9.5 מטר ובעומק 6.5 מטר, והקרנה וסאונד של אולם קולנוע. הפריקה מהחניה אורכת כ-40 שניות הליכה."
       />
-      <div className={`${container} space-y-10 pb-8`}>
-        <section id="packages" className="grid gap-6 md:grid-cols-3">
-          {packages.map((item) => (
-            <article key={item.id} className="flex flex-col border border-wine/20 bg-stone p-5">
-              <h2 className="text-2xl">{item.title}</h2>
+
+      <div className={`${container} grid gap-4`}>
+        <article className="border border-gold/20 bg-stone p-5 sm:p-7 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-10">
+          <div>
+            <h2 className="text-3xl">{business.title}</h2>
+            <p className="mt-3 max-w-2xl text-silver">{business.text}</p>
+            <ul className="mt-4 grid gap-2 text-sm sm:grid-cols-2">
+              {business.points.map((point) => (
+                <li key={point} className="border-t border-gold/20 pt-2">
+                  {point}
+                </li>
+              ))}
+            </ul>
+            <Link to={business.to} className={`${wineButton} mt-6`}>
+              {business.cta}
+            </Link>
+          </div>
+          <p className="nums mt-6 lg:mt-0 lg:text-end">
+            <span className="block font-display text-6xl leading-none">319</span>
+            <span className="text-sm text-silver">מושבים מונגשים</span>
+          </p>
+        </article>
+
+        <div className="grid gap-4 lg:grid-cols-2">
+          {rest.map((item) => (
+            <article
+              key={item.id}
+              id={item.id === "education" ? "education" : undefined}
+              className="scroll-mt-24 border border-gold/20 bg-stone p-5 sm:p-7"
+            >
+              <h2 className="text-3xl">{item.title}</h2>
               <p className="mt-3 text-silver">{item.text}</p>
-              <ul className="mt-4 space-y-1 text-sm">
+              <ul className="mt-4 grid gap-2 text-sm">
                 {item.points.map((point) => (
-                  <li key={point}>• {point}</li>
+                  <li key={point} className="border-t border-gold/20 pt-2">
+                    {point}
+                  </li>
                 ))}
               </ul>
-              <Link to={item.to} className={`${wineButton} mt-6`}>
-                {item.cta}
-              </Link>
-              {item.externalHref ? (
-                <ExternalLink href={item.externalHref} className={`${lineButton} mt-3`}>
-                  {item.externalLabel}
-                </ExternalLink>
-              ) : null}
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link to={item.to} className={wineButton}>
+                  {item.cta}
+                </Link>
+                {"externalHref" in item && item.externalHref ? (
+                  <ExternalLink href={item.externalHref} className={lineButton}>
+                    {item.externalLabel}
+                  </ExternalLink>
+                ) : null}
+              </div>
             </article>
           ))}
-        </section>
+        </div>
+      </div>
 
-        <section id="quote">
-          <h2 className="display-section">בדיקת זמינות והצעת מחיר</h2>
-          <p className="mt-3 max-w-2xl text-silver">מלאו את הפרטים ונחזור אליכם בוואטסאפ או במייל.</p>
-          <div className="mt-6">
-            <QuoteForm />
-          </div>
-        </section>
+      <div id="quote" className={`${container} scroll-mt-24 pt-10`}>
+        <QuoteForm />
       </div>
     </div>
   );
