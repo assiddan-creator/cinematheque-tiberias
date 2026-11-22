@@ -42,7 +42,7 @@ export function Poster({ src, title, eager = false }: { src?: string; title: str
 }
 
 function labelFor(item: Screening, filter: FilterId) {
-  if (filter !== "all" && filter in categoryLabel) {
+  if (filter !== "all" && item.categories.includes(filter as ScreeningCategory)) {
     return categoryLabel[filter as ScreeningCategory];
   }
   return categoryLabel[item.categories[0]];
@@ -270,7 +270,9 @@ export function ScreeningsBrowser() {
   const visible = useMemo(
     () =>
       screenings.filter((item) => {
-        const categoryOk = filter === "all" || item.categories.includes(filter);
+        const categoryOk = filter === "all" ||
+          item.categories.includes(filter) ||
+          (filter === "premiere" && item.categories.includes("adults"));
         return categoryOk && isListed(item);
       }),
     [filter],

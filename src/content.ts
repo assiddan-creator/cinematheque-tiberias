@@ -34,7 +34,8 @@ export const links = {
   maniTickets: "https://h1.nu/1A02B",
 };
 
-export type ScreeningCategory = "family" | "premiere" | "live";
+/** "adults" (a regular film for adults) is listed under the "premiere" filter. */
+export type ScreeningCategory = "family" | "premiere" | "adults" | "live";
 
 export type Screening = {
   id: string;
@@ -56,6 +57,7 @@ export type Screening = {
 export const categoryLabel: Record<ScreeningCategory, string> = {
   family: "ילדים ומשפחה",
   premiere: "טרום-בכורה",
+  adults: "מבוגרים",
   live: "מופע חי",
 };
 
@@ -144,6 +146,141 @@ export const screenings: Screening[] = [
     buyHref: links.maniTickets,
     secondaryHref: links.tickchak,
     secondaryLabel: "לוח ההופעות בטיקצ'אק",
+  },
+  {
+    id: "cinderella",
+    title: "סינדרלה ושלוש המשאלות (מדובב)",
+    categories: ["family"],
+    variant: "show",
+    summary:
+      "סינדרלה מקבלת שלוש משאלות מעץ קסום, והן יכולות לשנות הכול לפני הנשף המלכותי. גרסה מצוירת ומצחיקה לאגדה האהובה. מדובב.",
+    image: "/posters/cinderella.jpg",
+    dates: [
+      "2026-12-03T17:00:00+02:00",
+      "2026-12-15T17:00:00+02:00",
+      "2026-12-28T17:00:00+02:00",
+    ],
+    buyHref: "https://www.tarbutiberias.co.il/סינדרלה_ושלוש_המשאלות__מדובב_",
+    trailer: "jCbokhbr0dQ",
+  },
+  {
+    id: "kan-7-12",
+    title: "תראו אותי + כן, הסגנית! — פסטיבל כאן חינוכית",
+    categories: ["family", "premiere"],
+    variant: "show",
+    summary:
+      "הקרנת בכורה בחנוכה: שני פרקים מכל סדרה, מעונות חדשות של כאן חינוכית, לפני שהם עולים לשידור. כשעתיים ורבע.",
+    image: "/posters/kan-7-12.jpg",
+    dates: ["2026-12-07T11:00:00+02:00"],
+    price: "20 ₪",
+    buyHref:
+      "https://www.tarbutiberias.co.il/תראו_אותי___כן_הסגנית_-_פסטיבל_כאן_חינוכית__פרקים_מעונות_חדשות",
+  },
+  {
+    id: "kan-8-12",
+    title: "שכונת חיים + כן, הסגנית! — פסטיבל כאן חינוכית",
+    categories: ["family", "premiere"],
+    variant: "show",
+    summary:
+      "הקרנת בכורה בחנוכה: שני פרקים מכל סדרה, מעונות חדשות של כאן חינוכית, לפני שהם עולים לשידור. כשעתיים ורבע.",
+    image: "/posters/kan-8-12.jpg",
+    dates: ["2026-12-08T11:00:00+02:00"],
+    price: "20 ₪",
+    buyHref:
+      "https://www.tarbutiberias.co.il/שכונת_חיים___כן_הסגנית_-_פסטיבל_כאן_חינוכית__פרקים_מעונות_חדשות",
+  },
+  {
+    id: "kan-8-12-pm",
+    title: "תראו אותי + סושרד הצעיר — פסטיבל כאן חינוכית",
+    categories: ["family", "premiere"],
+    variant: "show",
+    summary:
+      "הקרנת בכורה בחנוכה: שני פרקים מכל סדרה, מעונות חדשות של כאן חינוכית, לפני שהם עולים לשידור. כשעתיים ורבע.",
+    image: "/posters/kan-8-12-pm.jpg",
+    dates: ["2026-12-08T16:00:00+02:00"],
+    price: "20 ₪",
+    buyHref:
+      "https://www.tarbutiberias.co.il/תראו_אותי___סושרד_הצעיר_-_פסטיבל_כאן_חינוכית__פרקים_מעונות_חדשות",
+  },
+  {
+    id: "kan-9-12",
+    title: "שכונת חיים + סושרד הצעיר — פסטיבל כאן חינוכית",
+    categories: ["family", "premiere"],
+    variant: "show",
+    summary:
+      "הקרנת בכורה בחנוכה: שני פרקים מכל סדרה, מעונות חדשות של כאן חינוכית, לפני שהם עולים לשידור. כשעתיים ורבע.",
+    image: "/posters/kan-9-12.jpg",
+    dates: ["2026-12-09T11:00:00+02:00"],
+    price: "20 ₪",
+    buyHref:
+      "https://www.tarbutiberias.co.il/שכונת_חיים___סושרד_הצעיר_-_פסטיבל_כאן_חינוכית__פרקים_מעונות_חדשות",
+  },
+  {
+    id: "kan-10-12",
+    title: "סושרד הצעיר + תראו אותי — פסטיבל כאן חינוכית",
+    categories: ["family", "premiere"],
+    variant: "show",
+    summary:
+      "הקרנת בכורה בחנוכה: שני פרקים מכל סדרה, מעונות חדשות של כאן חינוכית, לפני שהם עולים לשידור. כשעתיים ורבע.",
+    image: "/posters/kan-10-12.jpg",
+    dates: ["2026-12-10T11:00:00+02:00"],
+    price: "20 ₪",
+    buyHref:
+      "https://www.tarbutiberias.co.il/סושרד_הצעיר___תראו_אותי_-_פסטיבל_כאן_חינוכית__פרקים_מעונות_חדשות",
+  },
+  {
+    id: "dino",
+    title: "סודות פארק הדינוזאורים (מדובב)",
+    categories: ["family"],
+    variant: "show",
+    summary:
+      "ילדה וסבתה שומרות על שער סודי לעולם של דינוזאורים, ועכשיו דינוזאור תינוק בשם ג׳וניור צריך לחזור הביתה. הרפתקה משפחתית. מדובב.",
+    image: "/posters/dino.jpg",
+    dates: [
+      "2026-12-17T17:00:00+02:00",
+      "2026-12-21T17:00:00+02:00",
+      "2026-12-22T17:00:00+02:00",
+    ],
+    buyHref: "https://www.tarbutiberias.co.il/סודות_פארק_הדינוזאורים__מדובב_",
+    trailer: "CFpk2cjZQMw",
+  },
+  {
+    id: "badchan",
+    title: "הבדחן",
+    categories: ["adults"],
+    variant: "show",
+    summary:
+      "מוישה, בדחן חתונות ירושלמי שאיבד הכול, חייב להחזיר לעצמו את הכבוד לפני החתונה של בתו. קומדיה דרמטית של גידי דר, בכיכובו של שולי רנד.",
+    image: "/posters/badchan.jpg",
+    dates: ["2026-12-21T20:00:00+02:00"],
+    buyHref: "https://www.tarbutiberias.co.il/הבדחן",
+    trailer: "V_KHsCJ3wSc",
+  },
+  {
+    id: "north",
+    title: "הקסם הצפוני (מדובב)",
+    categories: ["family"],
+    variant: "show",
+    summary:
+      "קאי נעלם אל הצפון הקפוא, וגרדה יוצאת למסע אמיץ כדי להחזיר אותו. אנימציה בהשראת האגדה של אנדרסן. מדובב.",
+    image: "/posters/north.jpg",
+    dates: [
+      "2026-12-24T17:00:00+02:00",
+      "2026-12-29T17:00:00+02:00",
+      "2026-12-30T17:00:00+02:00",
+    ],
+    buyHref: "https://www.tarbutiberias.co.il/הקסם_הצפוני__מדובב_",
+    trailer: "W_rjvVpWJWA",
+  },
+  {
+    id: "pushup",
+    title: "שלישיית פוש אפ — סטנדאפ",
+    categories: ["live"],
+    variant: "show",
+    summary: "רווקה, גרושה ונשואה נפגשות על במה אחת לערב של צחוק באולם הסינמטק.",
+    image: "/posters/pushup.jpg",
+    dates: ["2027-02-11T21:00:00+02:00"],
+    buyHref: "https://www.tarbutiberias.co.il/שלישיית_פוש_אפ_-_סטנדאפ",
   },
   {
     id: "cinematheque-board",
