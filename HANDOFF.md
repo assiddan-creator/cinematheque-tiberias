@@ -1,5 +1,11 @@
 # HANDOFF
 
+## Update 2026-11-22
+- Screenings updated by hand: December films (סינדרלה, סודות פארק הדינוזאורים, הבדחן, הקסם הצפוני), the 5 Hanukkah "כאן חינוכית" festival screenings (7-10.12, 20 ₪), and שלישיית פוש אפ (11.2.2027). Data, links and trailers taken from the films' Tarbut Tiberias pages; posters in `public/posters/`.
+- New category `adults` (label "מבוגרים", shown under the "טרום-בכורה ומבוגרים" filter) for regular adult films such as הבדחן.
+- The "scheduled task twice a month" below was NOT found on this account (no local scheduled task, no cloud routine on 2026-11-22). The owner thinks it may live on his other Claude account. Until confirmed, update `screenings` by hand from https://www.tarbutiberias.co.il/סינמטק.
+- Kan promo video (trailer for the 5 festival cards) still pending.
+
 ## State (2026-11-09)
 - LIVE on Vercel: https://cinematheque-tiberias.vercel.app (project `cinematheque-tiberias`, team assiddan-creators-projects, Hobby). No custom domain yet.
 - Git integration: the project deploys from GitHub `assiddan-creator/cinematheque-tiberias`; every push to `main` is a production deploy (about 30 s). `vercel.json` sets the build (`npm run build`, output `dist`, clean URLs).
