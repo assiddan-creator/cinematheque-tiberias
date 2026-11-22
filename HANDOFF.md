@@ -5,6 +5,9 @@
 - New category `adults` (label "מבוגרים", shown under the "טרום-בכורה ומבוגרים" filter) for regular adult films such as הבדחן.
 - The "scheduled task twice a month" below was NOT found on this account (no local scheduled task, no cloud routine on 2026-11-22). The owner thinks it may live on his other Claude account. Until confirmed, update `screenings` by hand from https://www.tarbutiberias.co.il/סינמטק.
 - Kan promo video (trailer for the 5 festival cards) still pending.
+- New marketing page `/hall` (src/pages/HallPage.tsx), the link we email to clients. Anchors #producers, #organizations, #schools; WhatsApp buttons prefilled per audience. Not in the main nav (landing page). No prices published.
+- Contact phone + WhatsApp across the site are now Assi's: 054-9862353 (owner's request 2026-11-22; was 04-6305248 / 050-6512147).
+- Client list and email drafts: `C:\Users\assid\Pictures\סינמטק טבריה\marketing\` (clients.md, emails.md). Nothing sent yet.
 
 ## State (2026-11-09)
 - LIVE on Vercel: https://cinematheque-tiberias.vercel.app (project `cinematheque-tiberias`, team assiddan-creators-projects, Hobby). No custom domain yet.
