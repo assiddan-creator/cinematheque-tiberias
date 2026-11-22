@@ -24,7 +24,12 @@ type Audience = {
   points: string[];
   photo: PhotoData;
   photoCaption: string;
+  photoFocus?: string;
   photo2?: PhotoData;
+  /** Portrait second photo (shown 3:4 instead of 4:3). */
+  photo2Tall?: boolean;
+  /** Loop video instead of the second photo. */
+  video2?: (typeof videos)[keyof typeof videos];
   photo2Caption?: string;
   ask: string;
 };
@@ -43,10 +48,12 @@ const audiences: Audience[] = [
       "2 חדרי הלבשה נפרדים",
       "צוג קדמי פנוי לתלייה",
     ],
-    photo: photos.showStage,
-    photoCaption: "מופע מוזיקה על הבמה",
-    photo2: photos.standup,
-    photo2Caption: "ערב סטנדאפ באולם",
+    photo: photos.standupFullHall,
+    photoCaption: "ערב סטנדאפ באולם מלא",
+    photoFocus: "object-[50%_35%]",
+    photo2: photos.lectureScreen,
+    photo2Tall: true,
+    photo2Caption: "הרצאה מול המסך הגדול: אפשר להקרין ולהרצות באותו ערב",
     ask: "שלום אסי, אני מפיק/ה ומעוניין/ת לבדוק תאריך פנוי למופע בסינמטק טבריה.",
   },
   {
@@ -64,8 +71,8 @@ const audiences: Audience[] = [
     ],
     photo: photos.eventWide,
     photoCaption: "כנס באולם מלא, עם מצגת על המסך",
-    photo2: photos.lobby,
-    photo2Caption: "הלובי לקבלת פנים ולקייטרינג",
+    video2: videos.lobby,
+    photo2Caption: "הלובי מלא אורחים לפני אירוע",
     ask: "שלום אסי, אני מעוניין/ת לבדוק זמינות והצעת מחיר לכנס או לאירוע בסינמטק טבריה.",
   },
   {
@@ -174,7 +181,7 @@ export function HallPage() {
                   </h2>
                   <figure className="mt-6">
                     <div className="aspect-[4/3] overflow-hidden bg-ink">
-                      <Photo photo={a.photo} sizes="(min-width: 1024px) 38vw, 100vw" />
+                      <Photo photo={a.photo} sizes="(min-width: 1024px) 38vw, 100vw" className={a.photoFocus} />
                     </div>
                     <figcaption className="mt-2 text-sm text-muted">{a.photoCaption}</figcaption>
                   </figure>
@@ -188,10 +195,14 @@ export function HallPage() {
                       </li>
                     ))}
                   </ul>
-                  {a.photo2 ? (
-                    <figure className="mt-6 max-w-[28rem]">
-                      <div className="aspect-[4/3] overflow-hidden bg-ink">
-                        <Photo photo={a.photo2} sizes="(min-width: 1024px) 28rem, 100vw" />
+                  {a.photo2 || a.video2 ? (
+                    <figure className={`mt-6 ${a.photo2Tall ? "max-w-[22rem]" : "max-w-[28rem]"}`}>
+                      <div className={`${a.photo2Tall ? "aspect-[3/4]" : "aspect-[4/3]"} overflow-hidden bg-ink`}>
+                        {a.video2 ? (
+                          <LoopVideo {...a.video2} />
+                        ) : a.photo2 ? (
+                          <Photo photo={a.photo2} sizes="(min-width: 1024px) 22rem, 100vw" />
+                        ) : null}
                       </div>
                       <figcaption className="mt-2 text-sm text-muted">{a.photo2Caption}</figcaption>
                     </figure>

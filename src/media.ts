@@ -5,6 +5,18 @@
 export type Photo = { name: string; w: number; h: number; alt: string };
 
 export const photos = {
+  standupFullHall: {
+    name: "standup-full-hall",
+    w: 2000,
+    h: 1832,
+    alt: "ערב סטנדאפ באולם מלא: הקומיקאי על הבמה מול וילון סגול, פנסים תלויים מעל והקהל ממלא את השורות",
+  },
+  lectureScreen: {
+    name: "lecture-screen",
+    w: 1419,
+    h: 1892,
+    alt: "הרצאה על הבמה: המרצה עם מיקרופון ליד המסך הגדול, שמציג את המצגת שלה",
+  },
   hallScreening: {
     name: "hall-screening",
     w: 1536,
