@@ -5,6 +5,7 @@ import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import { scrollToTarget, startSmoothScroll } from "./motion/env";
 import { EventsPage } from "./pages/EventsPage";
+import { HallPage } from "./pages/HallPage";
 import { HomePage } from "./pages/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { ScreeningsPage } from "./pages/ScreeningsPage";
@@ -53,6 +54,7 @@ export function AppShell() {
           <Route path="/screenings" element={<ScreeningsPage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/tech" element={<TechPage />} />
+          <Route path="/hall" element={<HallPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

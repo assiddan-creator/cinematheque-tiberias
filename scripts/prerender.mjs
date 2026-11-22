@@ -59,12 +59,13 @@ page("/", "/", "index.html");
 page("/screenings", "/screenings", "screenings/index.html");
 page("/events", "/events", "events/index.html");
 page("/tech", "/tech", "tech/index.html");
+page("/hall", "/hall", "hall/index.html");
 page("404", "/404", "404.html");
 
 const robots = ["User-agent: *", "Allow: /"];
 if (site) {
   robots.push(`Sitemap: ${site}/sitemap.xml`);
-  const urls = ["/", "/screenings", "/events", "/tech"]
+  const urls = ["/", "/screenings", "/events", "/tech", "/hall"]
     .map((p) => `  <url><loc>${site}${p}</loc></url>`)
     .join("\n");
   fs.writeFileSync(

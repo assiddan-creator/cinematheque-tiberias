@@ -10,11 +10,11 @@ export const venue = {
   place: "מתחם תרבות יד לבנים",
   street: "רחוב וינגייט 7 / הגדוד העברי 4",
   city: "טבריה",
-  phoneDisplay: "04-6305248",
-  phoneTel: "+97246305248",
-  /** המספר שמסומן כוואטסאפ בעמוד הסינמטק באתר תרבות טבריה. */
-  whatsappDisplay: "050-6512147",
-  whatsappE164: "972506512147",
+  /** Assi's number (owner, 2026-11-22): calls and WhatsApp. */
+  phoneDisplay: "054-9862353",
+  phoneTel: "+972549862353",
+  whatsappDisplay: "054-9862353",
+  whatsappE164: "972549862353",
   email: "cinema.tbr@gmail.com",
   facebook: "https://www.facebook.com/kolnoatiberias/",
   maps:
