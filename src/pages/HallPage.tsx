@@ -6,6 +6,8 @@ import { Photo } from "../components/Photo";
 import { LoopVideo } from "../components/LoopVideo";
 import { SeatIcon } from "../components/SeatIcon";
 import { ExternalLink } from "../components/ExternalLink";
+import { HallForm } from "../components/HallForm";
+import { Logo } from "../components/Logo";
 import { btnLine, btnRed } from "../ui";
 
 /**
@@ -14,7 +16,7 @@ import { btnLine, btnRed } from "../ui";
  * Facts only from content.ts (owner's data); no prices are published.
  */
 
-const wa = (text: string) => `https://wa.me/${venue.whatsappE164}?text=${encodeURIComponent(text)}`;
+const wa = (text: string) => `https://wa.me/${venue.hallWhatsappE164}?text=${encodeURIComponent(text)}`;
 
 type Audience = {
   id: string;
@@ -54,7 +56,7 @@ const audiences: Audience[] = [
     photo2: photos.lectureScreen,
     photo2Tall: true,
     photo2Caption: "הרצאה מול המסך הגדול: אפשר להקרין ולהרצות באותו ערב",
-    ask: "שלום אסי, אני מפיק/ה ומעוניין/ת לבדוק תאריך פנוי למופע בסינמטק טבריה.",
+    ask: "שלום, אני מפיק/ה ומעוניין/ת לבדוק תאריך פנוי למופע בסינמטק טבריה.",
   },
   {
     id: "organizations",
@@ -73,7 +75,7 @@ const audiences: Audience[] = [
     photoCaption: "כנס באולם מלא, עם מצגת על המסך",
     video2: videos.lobby,
     photo2Caption: "הלובי מלא אורחים לפני אירוע",
-    ask: "שלום אסי, אני מעוניין/ת לבדוק זמינות והצעת מחיר לכנס או לאירוע בסינמטק טבריה.",
+    ask: "שלום, אני מעוניין/ת לבדוק זמינות והצעת מחיר לכנס או לאירוע בסינמטק טבריה.",
   },
   {
     id: "schools",
@@ -92,7 +94,7 @@ const audiences: Audience[] = [
     photoCaption: "מפגש של הסינמטק החינוכי באולם",
     photo2: photos.festivalHall,
     photo2Caption: "אולם מלא ילדים בפסטיבל",
-    ask: "שלום אסי, אני מבית ספר / ממוסד חינוך ומעוניין/ת לבדוק תאריך להקרנה או לאירוע בסינמטק טבריה.",
+    ask: "שלום, אני מבית ספר / ממוסד חינוך ומעוניין/ת לבדוק תאריך להקרנה או לאירוע בסינמטק טבריה.",
   },
 ];
 
@@ -123,18 +125,28 @@ export function HallPage() {
     <div className="pb-20">
       <header className="wrap grid gap-8 pb-10 pt-12 lg:grid-cols-12 lg:gap-8 lg:pb-14 lg:pt-20">
         <div className="lg:col-span-7">
-          <p className="font-medium text-house">{venue.name} · {venue.place}</p>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+            <Logo title={venue.name} className="block h-16 w-auto sm:h-20" />
+            <div className="flex items-center gap-5 border-s border-[var(--line)] ps-5" aria-label="בשיתוף">
+              <img src="/partners/haogen.svg" alt="העוגן, רשת המתנ״סים טבריה" width={210} height={272} className="h-12 w-auto sm:h-14" />
+              <img src="/partners/tiberias-municipality.png" alt="עיריית טבריה" width={157} height={69} className="h-8 w-auto sm:h-9" />
+            </div>
+          </div>
+          <p className="mt-8 font-medium text-house">{venue.name} · {venue.place}</p>
           <h1 className="display t-xl mt-3 max-w-[13ch]">האולם שלכם בטבריה</h1>
           <p className="mt-6 max-w-[38rem] text-[1.125rem] text-muted">
             אולם קולנוע ותיאטרון של 319 מושבים, עם במה מלאה, הקרנה וסאונד של קולנוע ולובי לקבלת פנים. למופע, לכנס,
-            לאירוע של העירייה או להקרנה לבית הספר. מדברים איתי ישירות, ואני בודק תאריך ושולח הצעה.
+            לאירוע של העירייה או להקרנה לבית הספר. משאירים פרטים בטופס או מדברים איתנו ישירות, ואנחנו בודקים תאריך ושולחים הצעה.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <ExternalLink href={wa("שלום אסי, אני מעוניין/ת לבדוק תאריך פנוי בסינמטק טבריה.")} className={btnRed}>
-              וואטסאפ {venue.whatsappDisplay}
+            <a href="#contact" className={btnRed}>
+              לטופס הפנייה
+            </a>
+            <ExternalLink href={wa("שלום, אני מעוניין/ת לבדוק תאריך פנוי בסינמטק טבריה.")} className={`${btnLine} nums`}>
+              וואטסאפ {venue.hallPhoneDisplay}
             </ExternalLink>
-            <a href={`tel:${venue.phoneTel}`} className={`${btnLine} nums`}>
-              שיחה {venue.phoneDisplay}
+            <a href={`tel:${venue.hallPhoneTel}`} className={`${btnLine} nums`}>
+              שיחה {venue.hallPhoneDisplay}
             </a>
           </div>
           <nav aria-label="בחרו מה מתאים לכם" className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-[0.9375rem]">
@@ -275,22 +287,26 @@ export function HallPage() {
         </ul>
       </section>
 
-      <section className="wrap pt-20" aria-labelledby="contact-title">
-        <div className="grid gap-8 bg-house p-8 text-white lg:grid-cols-12 lg:p-12">
-          <div className="lg:col-span-7">
-            <h2 id="contact-title" className="display t-l">
-              בודקים תאריך?
-            </h2>
-            <p className="mt-4 max-w-[34rem] text-[1.125rem] text-white/90">
-              כתבו לי בוואטסאפ או התקשרו: מה האירוע, באיזה תאריך ולכמה אנשים. אחזור אליכם עם זמינות והצעת מחיר.
-            </p>
+      <section id="contact" className="wrap scroll-mt-24 pt-20" aria-labelledby="contact-title">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-7">
+          <h2 id="contact-title" className="display t-l">
+            בודקים תאריך?
+          </h2>
+          <p className="mt-4 max-w-[34rem] text-[1.125rem] text-muted">
+            ממלאים את הפרטים ושולחים אלינו בוואטסאפ או במייל. נחזור אליכם עם זמינות והצעת מחיר.
+          </p>
+          <div className="mt-6">
+            <HallForm />
           </div>
-          <div className="grid content-end gap-3 lg:col-span-5">
-            <ExternalLink href={wa("שלום אסי, אני מעוניין/ת לבדוק תאריך פנוי בסינמטק טבריה.")} className="btn btn-white">
-              וואטסאפ {venue.whatsappDisplay}
+        </div>
+        <div className="grid content-start gap-3 bg-house p-8 text-white lg:col-span-5 lg:p-10">
+            <p className="display text-[2rem] leading-none">או ישירות</p>
+            <ExternalLink href={wa("שלום, אני מעוניין/ת לבדוק תאריך פנוי בסינמטק טבריה.")} className="btn btn-white nums mt-3">
+              וואטסאפ {venue.hallPhoneDisplay}
             </ExternalLink>
-            <a href={`tel:${venue.phoneTel}`} className="btn btn-ghost nums">
-              שיחה {venue.phoneDisplay}
+            <a href={`tel:${venue.hallPhoneTel}`} className="btn btn-ghost nums">
+              סלולרי {venue.hallPhoneDisplay}
             </a>
             <a href={`mailto:${venue.email}`} className="btn btn-ghost">
               {venue.email}

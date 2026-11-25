@@ -16,6 +16,10 @@ export const venue = {
   whatsappDisplay: "054-9862353",
   whatsappE164: "972549862353",
   email: "cinema.tbr@gmail.com",
+  /** Ortal's mobile (her request 2026-11-25): the contact on the /hall marketing page. */
+  hallPhoneDisplay: "050-2204333",
+  hallPhoneTel: "+972502204333",
+  hallWhatsappE164: "972502204333",
   facebook: "https://www.facebook.com/kolnoatiberias/",
   maps:
     "https://www.google.com/maps/search/?api=1&query=" +
